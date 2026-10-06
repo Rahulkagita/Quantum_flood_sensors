@@ -1,0 +1,61 @@
+# Node & Frontend dependencies & build outputs
+node_modules/
+dist/
+dist-ssr/
+.output/
+.nitro/
+.vinxi/
+.tanstack/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.local
+.env.local
+.env.*.local
+
+# Python & Backend artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables & Secret Files
+.env
+.env.*
+!.env.example
+
+# Temporary Downloads & Large Incomplete Data
+*.crdownload
+*.part
+*.tmp
+
+# Wrangler / Cloudflare
+.wrangler/
+.dev.vars
+
+# Editor directories and system files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# AI / Antigravity workspace
+.gemini/

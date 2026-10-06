@@ -1,0 +1,172 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-cyan-accent: #06B6D4;
+  --color-blue-accent: #0284C7;
+  --color-amber-warning: #F59E0B;
+  --color-red-critical: #EF4444;
+  --color-violet-quantum: #8B5CF6;
+}
+
+/* ===== Command Center Theme Tokens ===== */
+:root, .dark {
+  --radius: 0.375rem;
+  --background: #050B14;
+  --surface: #0B132B;
+  --elevated: #111C38;
+  --foreground: #F8FAFC;
+  --muted-foreground: #94A3B8;
+  --card: #0B132B;
+  --card-foreground: #F8FAFC;
+  --popover: #111C38;
+  --popover-foreground: #F8FAFC;
+  --primary: #06B6D4;
+  --primary-foreground: #050B14;
+  --secondary: #1C294D;
+  --secondary-foreground: #F8FAFC;
+  --muted: #111C38;
+  --accent: #162345;
+  --accent-foreground: #F8FAFC;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #1E2B4D;
+  --input: #1E2B4D;
+  --ring: #06B6D4;
+  --risk-low: #38BDF8;
+  --risk-medium: #F59E0B;
+  --risk-high: #F97316;
+  --risk-critical: #EF4444;
+  --quantum-accent: #8B5CF6;
+  --overlay: rgba(11, 19, 43, 0.92);
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html { background: var(--background); color-scheme: dark; }
+  body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); font-size: 14px; -webkit-font-smoothing: antialiased; }
+  button, [role="button"] { cursor: pointer; }
+}
+
+.font-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* Data State Badges */
+.badge-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.badge-state[data-state="LIVE"] { color: #10B981; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
+.badge-state[data-state="DATASET"] { color: #06B6D4; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
+.badge-state[data-state="SIMULATED"] { color: #F59E0B; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-state[data-state="OPTIMIZED"] { color: #8B5CF6; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
+.badge-state[data-state="UNAVAILABLE"] { color: #64748B; background: rgba(100, 116, 139, 0.15); border: 1px solid rgba(100, 116, 139, 0.3); }
+
+/* Risk Level Badges */
+.badge-risk {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-risk[data-risk="LOW"] { color: #38BDF8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); }
+.badge-risk[data-risk="WATCH"] { color: #F59E0B; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-risk[data-risk="WARNING"] { color: #F97316; background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); }
+.badge-risk[data-risk="CRITICAL"] { color: #EF4444; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+/* Navigation Rail & Header */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  background: rgba(11, 19, 43, 0.95);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.nav-rail {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.375rem;
+  color: #94A3B8;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.nav-item:hover { color: #F8FAFC; background: rgba(30, 43, 77, 0.5); }
+.nav-item[data-active="true"] {
+  color: #06B6D4;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  font-weight: 600;
+}
+
+/* Map Containers */
+.command-map-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 3.5rem);
+  background: #050B14;
+}
+
+/* HUD Overlay Panels */
+.hud-card {
+  background: rgba(11, 19, 43, 0.92);
+  border: 1px solid #1E2B4D;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+}
