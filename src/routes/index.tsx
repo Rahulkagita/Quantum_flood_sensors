@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
       { title: "Quantum Flood Response Command Center — Overview" },
       {
         name: "description",
-        content: "UC-067 Command Center Overview map and disaster-response status.",
+        content: "PRAVAAH Command Center Overview map and disaster-response status.",
       },
     ],
   }),

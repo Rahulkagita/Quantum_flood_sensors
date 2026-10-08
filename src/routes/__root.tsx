@@ -81,11 +81,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PRAVAAH — Flood Intelligence & Response Optimization (UC-067)" },
+      { title: "PRAVAAH — Flood Intelligence & Response Optimization" },
       {
         name: "description",
         content:
-          "PRAVAAH: Flood Intelligence & Response Optimization for Krishna–Godavari Basin (UC-067).",
+          "PRAVAAH: Flood Intelligence & Response Optimization for Krishna–Godavari Basin.",
       },
       { name: "author", content: "PRAVAAH Intelligence Team" },
     ],

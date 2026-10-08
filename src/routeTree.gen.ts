@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as ForecastRouteImport } from './routes/forecast'
+import { Route as NetworkOptimizationRouteImport } from './routes/network-optimization'
 import { Route as OverviewRouteImport } from './routes/overview'
 import { Route as QuantumOptimizerRouteImport } from './routes/quantum-optimizer'
+import { Route as ResponseRouteImport } from './routes/response'
 import { Route as ResponseNetworkRouteImport } from './routes/response-network'
 import { Route as RiskMapRouteImport } from './routes/risk-map'
 import { Route as ScenariosRouteImport } from './routes/scenarios'
@@ -33,6 +35,11 @@ const ForecastRoute = ForecastRouteImport.update({
   path: '/forecast',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NetworkOptimizationRoute = NetworkOptimizationRouteImport.update({
+  id: '/network-optimization',
+  path: '/network-optimization',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OverviewRoute = OverviewRouteImport.update({
   id: '/overview',
   path: '/overview',
@@ -41,6 +48,11 @@ const OverviewRoute = OverviewRouteImport.update({
 const QuantumOptimizerRoute = QuantumOptimizerRouteImport.update({
   id: '/quantum-optimizer',
   path: '/quantum-optimizer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResponseRoute = ResponseRouteImport.update({
+  id: '/response',
+  path: '/response',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResponseNetworkRoute = ResponseNetworkRouteImport.update({
@@ -63,8 +75,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/alerts': typeof AlertsRoute
   '/forecast': typeof ForecastRoute
+  '/network-optimization': typeof NetworkOptimizationRoute
   '/overview': typeof OverviewRoute
   '/quantum-optimizer': typeof QuantumOptimizerRoute
+  '/response': typeof ResponseRoute
   '/response-network': typeof ResponseNetworkRoute
   '/risk-map': typeof RiskMapRoute
   '/scenarios': typeof ScenariosRoute
@@ -73,8 +87,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/alerts': typeof AlertsRoute
   '/forecast': typeof ForecastRoute
+  '/network-optimization': typeof NetworkOptimizationRoute
   '/overview': typeof OverviewRoute
   '/quantum-optimizer': typeof QuantumOptimizerRoute
+  '/response': typeof ResponseRoute
   '/response-network': typeof ResponseNetworkRoute
   '/risk-map': typeof RiskMapRoute
   '/scenarios': typeof ScenariosRoute
@@ -84,8 +100,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/alerts': typeof AlertsRoute
   '/forecast': typeof ForecastRoute
+  '/network-optimization': typeof NetworkOptimizationRoute
   '/overview': typeof OverviewRoute
   '/quantum-optimizer': typeof QuantumOptimizerRoute
+  '/response': typeof ResponseRoute
   '/response-network': typeof ResponseNetworkRoute
   '/risk-map': typeof RiskMapRoute
   '/scenarios': typeof ScenariosRoute
@@ -96,8 +114,10 @@ export interface FileRouteTypes {
     | '/'
     | '/alerts'
     | '/forecast'
+    | '/network-optimization'
     | '/overview'
     | '/quantum-optimizer'
+    | '/response'
     | '/response-network'
     | '/risk-map'
     | '/scenarios'
@@ -106,8 +126,10 @@ export interface FileRouteTypes {
     | '/'
     | '/alerts'
     | '/forecast'
+    | '/network-optimization'
     | '/overview'
     | '/quantum-optimizer'
+    | '/response'
     | '/response-network'
     | '/risk-map'
     | '/scenarios'
@@ -116,8 +138,10 @@ export interface FileRouteTypes {
     | '/'
     | '/alerts'
     | '/forecast'
+    | '/network-optimization'
     | '/overview'
     | '/quantum-optimizer'
+    | '/response'
     | '/response-network'
     | '/risk-map'
     | '/scenarios'
@@ -127,8 +151,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AlertsRoute: typeof AlertsRoute
   ForecastRoute: typeof ForecastRoute
+  NetworkOptimizationRoute: typeof NetworkOptimizationRoute
   OverviewRoute: typeof OverviewRoute
   QuantumOptimizerRoute: typeof QuantumOptimizerRoute
+  ResponseRoute: typeof ResponseRoute
   ResponseNetworkRoute: typeof ResponseNetworkRoute
   RiskMapRoute: typeof RiskMapRoute
   ScenariosRoute: typeof ScenariosRoute
@@ -157,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForecastRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/network-optimization': {
+      id: '/network-optimization'
+      path: '/network-optimization'
+      fullPath: '/network-optimization'
+      preLoaderRoute: typeof NetworkOptimizationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/overview': {
       id: '/overview'
       path: '/overview'
@@ -169,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/quantum-optimizer'
       fullPath: '/quantum-optimizer'
       preLoaderRoute: typeof QuantumOptimizerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/response': {
+      id: '/response'
+      path: '/response'
+      fullPath: '/response'
+      preLoaderRoute: typeof ResponseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/response-network': {
@@ -199,8 +239,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AlertsRoute: AlertsRoute,
   ForecastRoute: ForecastRoute,
+  NetworkOptimizationRoute: NetworkOptimizationRoute,
   OverviewRoute: OverviewRoute,
   QuantumOptimizerRoute: QuantumOptimizerRoute,
+  ResponseRoute: ResponseRoute,
   ResponseNetworkRoute: ResponseNetworkRoute,
   RiskMapRoute: RiskMapRoute,
   ScenariosRoute: ScenariosRoute,
