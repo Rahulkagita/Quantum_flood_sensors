@@ -117,20 +117,20 @@ export function QuantumOptimizerScreen() {
   const relayBits = currentBitstring.slice(5);
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 text-[#1A2421] font-sans">
+    <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 text-[var(--text-primary)] font-sans">
       {/* 1. HEADER BANNER */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#DFE5DF] pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <Cpu className="w-5 h-5 text-[#7657B8]" />
-            <h1 className="text-xl font-bold tracking-tight text-[#1A2421]">
+            <Cpu className="w-5 h-5 text-[var(--quantum-violet)]" />
+            <h1 className="text-xl font-bold tracking-tight text-[var(--text-primary)]">
               Quantum Response Network Optimizer
             </h1>
             <span className="badge-quantum">
               Qiskit Statevector Simulator
             </span>
           </div>
-          <p className="text-xs text-[#5C6E66] mt-1 max-w-3xl">
+          <p className="text-xs text-[var(--text-secondary)] mt-1 max-w-3xl">
             QUBO + QAOA optimization of limited flood sensors and communication relays for maximum risk-weighted coverage and connected disaster-response infrastructure.
           </p>
         </div>
@@ -146,19 +146,19 @@ export function QuantumOptimizerScreen() {
       </div>
 
       {/* 2. CONTROLS BAR */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-4 shadow-xs text-xs">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-4 shadow-xs text-xs">
         <div className="flex items-center gap-4">
           {/* Basin Selector */}
-          <div className="flex items-center gap-1.5 bg-[#F7F8F3] px-2.5 py-1 rounded-md border border-[#DFE5DF]">
-            <span className="text-[#5C6E66] text-[11px] font-medium">Basin:</span>
+          <div className="flex items-center gap-1.5 bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border)]">
+            <span className="text-[var(--text-secondary)] text-[11px] font-medium">Basin:</span>
             {(["krishna", "godavari"] as BasinId[]).map((b) => (
               <button
                 key={b}
                 onClick={() => setBasinId(b)}
                 className={`px-2.5 py-0.5 rounded text-xs font-semibold capitalize transition-colors ${
                   basinId === b
-                    ? "bg-[#168A5B] text-white shadow-xs"
-                    : "text-[#5C6E66] hover:text-[#1A2421]"
+                    ? "bg-[var(--primary-green)] text-white shadow-xs"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 {b}
@@ -167,30 +167,30 @@ export function QuantumOptimizerScreen() {
           </div>
 
           {/* Scenario Selector */}
-          <div className="flex items-center gap-1.5 bg-[#F7F8F3] px-2.5 py-1 rounded-md border border-[#DFE5DF]">
-            <span className="text-[#5C6E66] text-[11px] font-medium">Scenario:</span>
+          <div className="flex items-center gap-1.5 bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border)]">
+            <span className="text-[var(--text-secondary)] text-[11px] font-medium">Scenario:</span>
             <select
               value={scenario}
               onChange={(e) => setScenario(e.target.value)}
-              className="bg-transparent text-[#1A2421] text-xs font-semibold outline-none cursor-pointer"
+              className="bg-transparent text-[var(--text-primary)] text-xs font-semibold outline-none cursor-pointer"
             >
-              <option value="MONSOON_SURGE">Monsoon Surge (+142.5mm)</option>
-              <option value="EXTREME_CYCLONE">Extreme Cyclone (+210.0mm)</option>
-              <option value="NORMAL">Normal Baseline (+45.0mm)</option>
+              <option value="MONSOON_SURGE" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">Monsoon Surge (+142.5mm)</option>
+              <option value="EXTREME_CYCLONE" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">Extreme Cyclone (+210.0mm)</option>
+              <option value="NORMAL" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">Normal Baseline (+45.0mm)</option>
             </select>
           </div>
 
           {/* QAOA Depth p */}
-          <div className="flex items-center gap-1.5 bg-[#F7F8F3] px-2.5 py-1 rounded-md border border-[#DFE5DF]">
-            <span className="text-[#5C6E66] text-[11px] font-medium">QAOA Depth p:</span>
+          <div className="flex items-center gap-1.5 bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border)]">
+            <span className="text-[var(--text-secondary)] text-[11px] font-medium">QAOA Depth p:</span>
             {[1, 2, 3].map((pVal) => (
               <button
                 key={pVal}
                 onClick={() => setDepthP(pVal)}
                 className={`px-2.5 py-0.5 rounded text-xs font-semibold transition-colors ${
                   depthP === pVal
-                    ? "bg-[#7657B8] text-white shadow-xs"
-                    : "text-[#5C6E66] hover:text-[#1A2421]"
+                    ? "bg-[var(--quantum-violet)] text-white shadow-xs"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 p={pVal}
@@ -199,14 +199,14 @@ export function QuantumOptimizerScreen() {
           </div>
         </div>
 
-        <div className="text-xs text-[#5C6E66]">
-          Execution Engine: <strong className="text-[#1A2421]">Qiskit 2.5 Statevector Simulator</strong>
+        <div className="text-xs text-[var(--text-secondary)]">
+          Execution Engine: <strong className="text-[var(--text-primary)]">Qiskit 2.5 Statevector Simulator</strong>
         </div>
       </div>
 
       {/* 3. COUPLING WORKFLOW PIPELINE (7 STAGE CARDS) */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-3">
-        <div className="text-xs font-bold text-[#1A2421] uppercase tracking-wider">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-3">
+        <div className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
           Coupled Mathematical Workflow
         </div>
         <div className="grid grid-cols-2 md:grid-cols-7 gap-2">
@@ -227,16 +227,16 @@ export function QuantumOptimizerScreen() {
                 onClick={() => setActiveStage(s.step)}
                 className={`p-3 rounded-lg border text-left flex flex-col justify-between transition-all ${
                   isSelected
-                    ? "bg-[#EEE9F8] border-[#7657B8] text-[#1A2421] shadow-xs"
-                    : "bg-[#F7F8F3] border-[#DFE5DF] text-[#5C6E66] hover:border-[#B3C0B8]"
+                    ? "bg-[var(--quantum-surface)] border-[var(--quantum-border)] text-[var(--text-primary)] shadow-xs"
+                    : "bg-[var(--surface-secondary)] border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-semibold text-[#5C6E66]">Stage {s.step}</span>
-                  <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-[#7657B8]" : "text-[#8FA69B]"}`} />
+                  <span className="text-[10px] font-semibold text-[var(--text-secondary)]">Stage {s.step}</span>
+                  <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-[var(--quantum-violet)]" : "text-[var(--text-muted)]"}`} />
                 </div>
-                <div className="font-bold text-xs mt-2 text-[#1A2421]">{s.title}</div>
-                <div className="text-[11px] text-[#5C6E66] truncate mt-0.5">{s.sub}</div>
+                <div className="font-bold text-xs mt-2 text-[var(--text-primary)]">{s.title}</div>
+                <div className="text-[11px] text-[var(--text-secondary)] truncate mt-0.5">{s.sub}</div>
               </button>
             );
           })}
@@ -254,54 +254,54 @@ export function QuantumOptimizerScreen() {
           </>
         ) : (
           <>
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66]">Register Qubits (N+M)</div>
-              <div className="text-3xl font-bold text-[#7657B8] mt-1.5">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)]">Register Qubits (N+M)</div>
+              <div className="text-3xl font-bold text-[var(--quantum-violet)] mt-1.5">
                 {qubo?.num_qubits ?? 8}
-                <span className="text-xs font-normal text-[#5C6E66]"> Qubits</span>
+                <span className="text-xs font-normal text-[var(--text-secondary)]"> Qubits</span>
               </div>
-              <div className="text-[11px] text-[#5C6E66] mt-1">
+              <div className="text-[11px] text-[var(--text-secondary)] mt-1">
                 {qubo?.sensor_qubits ?? 5} Sensors + {qubo?.relay_qubits ?? 3} Relays
               </div>
             </div>
 
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66]">Objective Score</div>
-              <div className="text-3xl font-bold text-[#168A5B] mt-1.5">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)]">Objective Score</div>
+              <div className="text-3xl font-bold text-[var(--primary-green)] mt-1.5">
                 {metrics?.objective_score ?? 412.5}
               </div>
-              <div className="text-[11px] text-[#5C6E66] mt-1">
+              <div className="text-[11px] text-[var(--text-secondary)] mt-1">
                 QUBO Energy: {metrics?.qubo_energy ?? -412.5}
               </div>
             </div>
 
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66]">Approximation Ratio</div>
-              <div className="text-3xl font-bold text-[#126B48] mt-1.5">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)]">Approximation Ratio</div>
+              <div className="text-3xl font-bold text-[var(--primary-green)] mt-1.5">
                 {((metrics?.approximation_ratio ?? 0.9929) * 100).toFixed(2)}%
               </div>
-              <div className="text-[11px] text-[#5C6E66] mt-1">vs Exact Ground Truth</div>
+              <div className="text-[11px] text-[var(--text-secondary)] mt-1">vs Exact Ground Truth</div>
             </div>
 
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66]">Optimality Gap</div>
-              <div className="text-3xl font-bold text-[#1A2421] mt-1.5">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)]">Optimality Gap</div>
+              <div className="text-3xl font-bold text-[var(--text-primary)] mt-1.5">
                 {metrics?.optimality_gap_percent ?? 0.71}%
               </div>
-              <div className="text-[11px] text-[#168A5B] mt-1 font-semibold">0 Constraint Violations</div>
+              <div className="text-[11px] text-[var(--primary-green)] mt-1 font-semibold">0 Constraint Violations</div>
             </div>
           </>
         )}
       </div>
 
       {/* 5. SECTION 1: BINARY VARIABLE & QUBIT MAPPING TABLE */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-[#DFE5DF] pb-3">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
           <div>
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <FileCode className="w-4 h-4 text-[#7657B8]" /> Section 1: Qubit Mapping Table
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <FileCode className="w-4 h-4 text-[var(--quantum-violet)]" /> Section 1: Qubit Mapping Table
             </h2>
-            <p className="text-xs text-[#5C6E66] mt-0.5">
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               Physical candidate locations mapped to binary qubits (x_i ∈ &#123;0,1&#125; for sensors, y_j ∈ &#123;0,1&#125; for relays)
             </p>
           </div>
@@ -316,7 +316,7 @@ export function QuantumOptimizerScreen() {
           ) : (
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-[#DFE5DF] text-[#5C6E66] bg-[#F7F8F3]">
+                <tr className="border-b border-[var(--border)] text-[var(--text-secondary)] bg-[var(--surface-secondary)]">
                   <th className="p-3">Qubit Index</th>
                   <th className="p-3">Variable</th>
                   <th className="p-3">Node ID</th>
@@ -326,25 +326,25 @@ export function QuantumOptimizerScreen() {
                   <th className="p-3">Decoded State</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#DFE5DF]">
+              <tbody className="divide-y divide-[var(--border)]">
                 {candidatesList.map((c, i) => {
                   const isSelected = metrics?.selected_sensors?.includes(c.id) ?? i < 3;
                   return (
-                    <tr key={c.id} className="hover:bg-[#F7F8F3] transition-colors">
-                      <td className="p-3 font-semibold text-[#7657B8] font-mono">q_{i}</td>
-                      <td className="p-3 font-mono font-bold text-[#126B48]">x_{i + 1}</td>
-                      <td className="p-3 font-medium text-[#1A2421]">{c.id}</td>
-                      <td className="p-3 text-[#126B48] font-medium">Sensor Candidate</td>
-                      <td className="p-3 font-semibold text-[#1A2421]">{c.risk_score} / 100</td>
-                      <td className="p-3 text-[#5C6E66]">
+                    <tr key={c.id} className="hover:bg-[var(--surface-secondary)] transition-colors">
+                      <td className="p-3 font-semibold text-[var(--quantum-violet)] font-mono">q_{i}</td>
+                      <td className="p-3 font-mono font-bold text-[var(--primary-green)]">x_{i + 1}</td>
+                      <td className="p-3 font-medium text-[var(--text-primary)]">{c.id}</td>
+                      <td className="p-3 text-[var(--primary-green)] font-medium">Sensor Candidate</td>
+                      <td className="p-3 font-semibold text-[var(--text-primary)]">{c.risk_score} / 100</td>
+                      <td className="p-3 text-[var(--text-secondary)]">
                         {((c.population_count || 150000) / 1000).toFixed(0)}k residents
                       </td>
                       <td className="p-3">
                         <span
                           className={`px-2.5 py-0.5 rounded text-[11px] font-semibold ${
                             isSelected
-                              ? "bg-[#EEF7F1] text-[#126B48] border border-[#C4E2D3]"
-                              : "bg-[#F7F8F3] text-[#8FA69B] border border-[#DFE5DF]"
+                              ? "bg-[var(--soft-green)] text-[var(--primary-green)] border border-[var(--border)]"
+                              : "bg-[var(--surface-secondary)] text-[var(--text-muted)] border border-[var(--border)]"
                           }`}
                         >
                           {isSelected ? "x=1 (Selected)" : "x=0 (Unselected)"}
@@ -358,19 +358,19 @@ export function QuantumOptimizerScreen() {
                   const qIdx = (qubo?.sensor_qubits ?? 5) + j;
                   const isSelected = metrics?.selected_relays?.includes(r.id) ?? j < 2;
                   return (
-                    <tr key={r.id} className="hover:bg-[#F7F8F3] bg-[#FDFBF7] transition-colors">
-                      <td className="p-3 font-semibold text-[#7657B8] font-mono">q_{qIdx}</td>
-                      <td className="p-3 font-mono font-bold text-[#7657B8]">y_{j + 1}</td>
-                      <td className="p-3 font-medium text-[#1A2421]">{r.id} ({r.name})</td>
-                      <td className="p-3 text-[#7657B8] font-medium">Comm Relay Mast</td>
-                      <td className="p-3 text-[#8FA69B]">N/A (Relay)</td>
-                      <td className="p-3 text-[#5C6E66]">{r.range} Range</td>
+                    <tr key={r.id} className="hover:bg-[var(--surface-secondary)] bg-[var(--surface-secondary)] transition-colors">
+                      <td className="p-3 font-semibold text-[var(--quantum-violet)] font-mono">q_{qIdx}</td>
+                      <td className="p-3 font-mono font-bold text-[var(--quantum-violet)]">y_{j + 1}</td>
+                      <td className="p-3 font-medium text-[var(--text-primary)]">{r.id} ({r.name})</td>
+                      <td className="p-3 text-[var(--quantum-violet)] font-medium">Comm Relay Mast</td>
+                      <td className="p-3 text-[var(--text-muted)]">N/A (Relay)</td>
+                      <td className="p-3 text-[var(--text-secondary)]">{r.range} Range</td>
                       <td className="p-3">
                         <span
                           className={`px-2.5 py-0.5 rounded text-[11px] font-semibold ${
                             isSelected
-                              ? "bg-[#EEE9F8] text-[#7657B8] border border-[#D8CCE8]"
-                              : "bg-[#F7F8F3] text-[#8FA69B] border border-[#DFE5DF]"
+                              ? "bg-[var(--quantum-surface)] text-[var(--quantum-violet)] border border-[var(--quantum-border)]"
+                              : "bg-[var(--surface-secondary)] text-[var(--text-muted)] border border-[var(--border)]"
                           }`}
                         >
                           {isSelected ? "y=1 (Active)" : "y=0 (Candidate)"}
@@ -388,75 +388,75 @@ export function QuantumOptimizerScreen() {
       {/* 6, 7 & 8. MATHEMATICAL FORMULATION: QUBO, CONSTRAINT PARAMS, ISING, QAOA PARAMS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Section 2: QUBO Panel */}
-        <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-3">
-          <div className="flex items-center justify-between border-b border-[#DFE5DF] pb-3">
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <Layers className="w-4 h-4 text-[#168A5B]" /> Section 2: QUBO Formulation
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-3">
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <Layers className="w-4 h-4 text-[var(--primary-green)]" /> Section 2: QUBO Formulation
             </h2>
             <span className="badge-state" data-state="LIVE">8x8 Matrix</span>
           </div>
 
-          <div className="bg-[#F7F8F3] p-3.5 rounded-lg border border-[#DFE5DF] space-y-2 text-xs">
-            <div className="font-semibold text-[#126B48]">Hamiltonian Objective Function:</div>
-            <div className="text-xs text-[#1A2421] bg-white p-2.5 rounded-md font-mono border border-[#DFE5DF] overflow-x-auto leading-relaxed">
+          <div className="bg-[var(--surface-secondary)] p-3.5 rounded-lg border border-[var(--border)] space-y-2 text-xs">
+            <div className="font-semibold text-[var(--primary-green)]">Hamiltonian Objective Function:</div>
+            <div className="text-xs text-[var(--text-primary)] bg-[var(--surface-primary)] p-2.5 rounded-md font-mono border border-[var(--border)] overflow-x-auto leading-relaxed">
               min H(x,y) = - ∑ w_i r_i x_i + λ_S (∑ x_i - K)² + λ_R (∑ y_j - M)² + C_disc · Disc(x,y)
             </div>
-            <p className="text-[11px] text-[#5C6E66] pt-1">
+            <p className="text-[11px] text-[var(--text-secondary)] pt-1">
               Maximizes risk-weighted flood coverage while enforcing exact budget penalties and sensor reachability.
             </p>
           </div>
         </div>
 
         {/* Section 3: Constraint Parameters */}
-        <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-3">
-          <div className="flex items-center justify-between border-b border-[#DFE5DF] pb-3">
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-[#3E8ED0]" /> Section 3: Constraint Parameters
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-3">
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <Sliders className="w-4 h-4 text-[var(--river-blue)]" /> Section 3: Constraint Parameters
             </h2>
             <span className="badge-state" data-state="LIVE">Penalty Multipliers</span>
           </div>
 
           <div className="space-y-2 text-xs">
-            <div className="flex justify-between p-2.5 rounded bg-[#F7F8F3] border border-[#DFE5DF]">
-              <span className="text-[#5C6E66]">Sensor Budget (K):</span>
-              <strong className="text-[#126B48]">K = 3 Sites (λ_S = 100.0)</strong>
+            <div className="flex justify-between p-2.5 rounded bg-[var(--surface-secondary)] border border-[var(--border)]">
+              <span className="text-[var(--text-secondary)]">Sensor Budget (K):</span>
+              <strong className="text-[var(--primary-green)]">K = 3 Sites (λ_S = 100.0)</strong>
             </div>
-            <div className="flex justify-between p-2.5 rounded bg-[#F7F8F3] border border-[#DFE5DF]">
-              <span className="text-[#5C6E66]">Relay Budget (M):</span>
-              <strong className="text-[#7657B8]">M = 2 Masts (λ_R = 100.0)</strong>
+            <div className="flex justify-between p-2.5 rounded bg-[var(--surface-secondary)] border border-[var(--border)]">
+              <span className="text-[var(--text-secondary)]">Relay Budget (M):</span>
+              <strong className="text-[var(--quantum-violet)]">M = 2 Masts (λ_R = 100.0)</strong>
             </div>
-            <div className="flex justify-between p-2.5 rounded bg-[#F7F8F3] border border-[#DFE5DF]">
-              <span className="text-[#5C6E66]">Disconnected Penalty:</span>
-              <strong className="text-[#E85D5A]">C_disc = 250.0</strong>
+            <div className="flex justify-between p-2.5 rounded bg-[var(--surface-secondary)] border border-[var(--border)]">
+              <span className="text-[var(--text-secondary)]">Disconnected Penalty:</span>
+              <strong className="text-[var(--risk-critical)]">C_disc = 250.0</strong>
             </div>
           </div>
         </div>
 
         {/* Section 4 & 5: Ising & QAOA Parameters */}
-        <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-3">
-          <div className="flex items-center justify-between border-b border-[#DFE5DF] pb-3">
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <Zap className="w-4 h-4 text-[#7657B8]" /> Section 4 & 5: Ising & QAOA Engine
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-3">
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <Zap className="w-4 h-4 text-[var(--quantum-violet)]" /> Section 4 & 5: Ising & QAOA Engine
             </h2>
             <span className="badge-quantum">Statevector</span>
           </div>
 
           <div className="space-y-2 text-xs">
-            <div className="p-2.5 rounded bg-[#EEE9F8] border border-[#D8CCE8] font-mono text-[#6343A1]">
+            <div className="p-2.5 rounded bg-[var(--quantum-surface)] border border-[var(--quantum-border)] font-mono text-[var(--quantum-violet)]">
               x_i = (1 - Z_i)/2, y_j = (1 - Z_j)/2
             </div>
-            <div className="space-y-1 text-[#5C6E66] pt-1">
+            <div className="space-y-1 text-[var(--text-secondary)] pt-1">
               <div className="flex justify-between">
                 <span>QAOA Depth p:</span>
-                <strong className="text-[#7657B8]">p = {depthP}</strong>
+                <strong className="text-[var(--quantum-violet)]">p = {depthP}</strong>
               </div>
               <div className="flex justify-between">
                 <span>Gamma (γ):</span>
-                <strong className="text-[#1A2421]">γ = 0.3927 rad</strong>
+                <strong className="text-[var(--text-primary)]">γ = 0.3927 rad</strong>
               </div>
               <div className="flex justify-between">
                 <span>Beta (β):</span>
-                <strong className="text-[#1A2421]">β = 0.7854 rad</strong>
+                <strong className="text-[var(--text-primary)]">β = 0.7854 rad</strong>
               </div>
             </div>
           </div>
@@ -468,13 +468,13 @@ export function QuantumOptimizerScreen() {
 
       {/* 10. SECTION 7: SOLVER BENCHMARK */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-[#DFE5DF] pb-3">
+        <div className="lg:col-span-2 bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
             <div>
-              <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-                <BarChart2 className="w-4 h-4 text-[#168A5B]" /> Section 7: Solver Benchmark Comparison
+              <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+                <BarChart2 className="w-4 h-4 text-[var(--primary-green)]" /> Section 7: Solver Benchmark Comparison
               </h2>
-              <p className="text-xs text-[#5C6E66] mt-0.5">
+              <p className="text-xs text-[var(--text-secondary)] mt-0.5">
                 Exact ground truth (ILP) vs Classical Greedy vs QAOA statevector simulation
               </p>
             </div>
@@ -486,16 +486,16 @@ export function QuantumOptimizerScreen() {
           <div className="h-56 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={solverComparisonData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#EEF2EE" />
-                <XAxis dataKey="solver" stroke="#8FA69B" tick={{ fontSize: 11, fill: "#5C6E66" }} />
-                <YAxis stroke="#8FA69B" tick={{ fontSize: 11, fill: "#5C6E66" }} domain={[350, 430]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="solver" stroke="var(--text-muted)" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
+                <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} domain={[350, 430]} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#FFFFFF",
-                    borderColor: "#DFE5DF",
-                    color: "#1A2421",
+                    backgroundColor: "var(--surface-primary)",
+                    borderColor: "var(--border)",
+                    color: "var(--text-primary)",
                     borderRadius: "6px",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                     fontSize: "12px",
                   }}
                 />
@@ -503,7 +503,7 @@ export function QuantumOptimizerScreen() {
                   {solverComparisonData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={index === 0 ? "#126B48" : index === 1 ? "#3E8ED0" : "#7657B8"}
+                      fill={index === 0 ? "var(--primary-green)" : index === 1 ? "var(--river-blue)" : "var(--quantum-violet)"}
                     />
                   ))}
                 </Bar>
@@ -513,38 +513,38 @@ export function QuantumOptimizerScreen() {
         </div>
 
         {/* Validation Summary */}
-        <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs flex flex-col justify-between space-y-4">
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs flex flex-col justify-between space-y-4">
           <div className="space-y-3">
-            <div className="border-b border-[#DFE5DF] pb-2">
-              <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#168A5B]" /> Solution Verification
+            <div className="border-b border-[var(--border)] pb-2">
+              <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[var(--primary-green)]" /> Solution Verification
               </h2>
-              <p className="text-xs text-[#5C6E66] mt-0.5">Automated validation against constraints</p>
+              <p className="text-xs text-[var(--text-secondary)] mt-0.5">Automated validation against constraints</p>
             </div>
 
             <div className="space-y-2 text-xs">
-              <div className="flex justify-between p-2.5 rounded-md bg-[#F7F8F3] border border-[#DFE5DF]">
-                <span className="text-[#5C6E66]">Ground Truth:</span>
-                <span className="font-bold text-[#126B48]">Exact Solver (ILP)</span>
+              <div className="flex justify-between p-2.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)]">
+                <span className="text-[var(--text-secondary)]">Ground Truth:</span>
+                <span className="font-bold text-[var(--primary-green)]">Exact Solver (ILP)</span>
               </div>
-              <div className="flex justify-between p-2.5 rounded-md bg-[#F7F8F3] border border-[#DFE5DF]">
-                <span className="text-[#5C6E66]">Approximation Ratio:</span>
-                <span className="font-bold text-[#7657B8]">
+              <div className="flex justify-between p-2.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)]">
+                <span className="text-[var(--text-secondary)]">Approximation Ratio:</span>
+                <span className="font-bold text-[var(--quantum-violet)]">
                   {((metrics?.approximation_ratio ?? 0.9929) * 100).toFixed(2)}%
                 </span>
               </div>
-              <div className="flex justify-between p-2.5 rounded-md bg-[#F7F8F3] border border-[#DFE5DF]">
-                <span className="text-[#5C6E66]">Optimality Gap:</span>
-                <span className="font-bold text-[#1A2421]">{metrics?.optimality_gap_percent ?? 0.71}%</span>
+              <div className="flex justify-between p-2.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)]">
+                <span className="text-[var(--text-secondary)]">Optimality Gap:</span>
+                <span className="font-bold text-[var(--text-primary)]">{metrics?.optimality_gap_percent ?? 0.71}%</span>
               </div>
-              <div className="flex justify-between p-2.5 rounded-md bg-[#F7F8F3] border border-[#DFE5DF]">
-                <span className="text-[#5C6E66]">Disconnected Sensors:</span>
-                <span className="font-bold text-[#168A5B]">0 (100% Connected)</span>
+              <div className="flex justify-between p-2.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)]">
+                <span className="text-[var(--text-secondary)]">Disconnected Sensors:</span>
+                <span className="font-bold text-[var(--primary-green)]">0 (100% Connected)</span>
               </div>
             </div>
           </div>
 
-          <div className="p-3 rounded-md bg-[#EEF7F1] border border-[#C4E2D3] text-xs text-[#126B48] flex items-center gap-2">
+          <div className="p-3 rounded-md bg-[var(--soft-green)] border border-[var(--border)] text-xs text-[var(--primary-green)] flex items-center gap-2">
             <Check className="w-4 h-4 shrink-0" />
             <span>Exact integer solver confirms QAOA solution reaches 99.29% optimal objective.</span>
           </div>
@@ -552,33 +552,33 @@ export function QuantumOptimizerScreen() {
       </div>
 
       {/* 11. SECTION 8: BITSTRING DECODER BOX */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-4">
-        <div className="flex items-center justify-between border-b border-[#DFE5DF] pb-3">
-          <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-            <Binary className="w-4 h-4 text-[#7657B8]" /> Section 8: Bitstring Decoder
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+          <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Binary className="w-4 h-4 text-[var(--quantum-violet)]" /> Section 8: Bitstring Decoder
           </h2>
-          <span className="font-mono text-xs font-bold text-[#7657B8] bg-[#EEE9F8] px-2.5 py-1 rounded border border-[#D8CCE8]">
+          <span className="font-mono text-xs font-bold text-[var(--quantum-violet)] bg-[var(--quantum-surface)] px-2.5 py-1 rounded border border-[var(--quantum-border)]">
             Decoded Bitstring: {currentBitstring}
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div className="bg-[#EEF7F1] border border-[#C4E2D3] p-4 rounded-lg space-y-2">
-            <div className="font-bold text-[#126B48] flex items-center justify-between">
+          <div className="bg-[var(--soft-green)] border border-[var(--border)] p-4 rounded-lg space-y-2">
+            <div className="font-bold text-[var(--primary-green)] flex items-center justify-between">
               <span>Sensor Bits (q_0 .. q_4):</span>
               <span className="font-mono text-sm">{sensorBits}</span>
             </div>
-            <p className="text-[11px] text-[#5C6E66]">
+            <p className="text-[11px] text-[var(--text-secondary)]">
               Sensors at {metrics?.selected_sensors?.join(", ") || "C-KR-001, C-KR-002, C-KR-003"} are turned ON (x_i = 1).
             </p>
           </div>
 
-          <div className="bg-[#EEE9F8] border border-[#D8CCE8] p-4 rounded-lg space-y-2">
-            <div className="font-bold text-[#6343A1] flex items-center justify-between">
+          <div className="bg-[var(--quantum-surface)] border border-[var(--quantum-border)] p-4 rounded-lg space-y-2">
+            <div className="font-bold text-[var(--quantum-violet)] flex items-center justify-between">
               <span>Relay Mast Bits (q_5 .. q_7):</span>
               <span className="font-mono text-sm">{relayBits}</span>
             </div>
-            <p className="text-[11px] text-[#5C6E66]">
+            <p className="text-[11px] text-[var(--text-secondary)]">
               Relay masts at {metrics?.selected_relays?.join(", ") || "RL-KR-P1, RL-KR-P2"} are turned ON (y_j = 1).
             </p>
           </div>
@@ -586,24 +586,24 @@ export function QuantumOptimizerScreen() {
       </div>
 
       {/* 12. SECTION 9: DECODED NETWORK MAP */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-3">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <Radio className="w-4 h-4 text-[#168A5B]" /> Section 9: Decoded Connected Deployment Result Map
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <Radio className="w-4 h-4 text-[var(--primary-green)]" /> Section 9: Decoded Connected Deployment Result Map
             </h2>
-            <p className="text-xs text-[#5C6E66] mt-0.5">
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               Optimal sensor locations (Pravaah Green) paired with communication relay masts (Violet)
             </p>
           </div>
 
-          <div className="flex items-center bg-[#F7F8F3] p-0.5 rounded-md border border-[#DFE5DF] text-xs">
+          <div className="flex items-center bg-[var(--surface-secondary)] p-0.5 rounded-md border border-[var(--border)] text-xs">
             <button
               onClick={() => setViewMode("OPTIMIZED")}
               className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
                 viewMode === "OPTIMIZED"
-                  ? "bg-white text-[#126B48] font-semibold shadow-xs"
-                  : "text-[#5C6E66] hover:text-[#1A2421]"
+                  ? "bg-[var(--surface-primary)] text-[var(--primary-green)] font-semibold shadow-xs"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
               Optimized Topology
@@ -612,8 +612,8 @@ export function QuantumOptimizerScreen() {
               onClick={() => setViewMode("CANDIDATE")}
               className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
                 viewMode === "CANDIDATE"
-                  ? "bg-white text-[#126B48] font-semibold shadow-xs"
-                  : "text-[#5C6E66] hover:text-[#1A2421]"
+                  ? "bg-[var(--surface-primary)] text-[var(--primary-green)] font-semibold shadow-xs"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
               Candidates Only
@@ -621,7 +621,7 @@ export function QuantumOptimizerScreen() {
           </div>
         </div>
 
-        <div className="w-full rounded-lg overflow-hidden border border-[#DFE5DF]">
+        <div className="w-full rounded-lg overflow-hidden border border-[var(--border)]">
           <CommandMap
             basinId={basinId}
             selectedSensors={metrics?.selected_sensors || []}
@@ -634,10 +634,10 @@ export function QuantumOptimizerScreen() {
       </div>
 
       {/* 13. TECHNICAL DISCLOSURE NOTICE */}
-      <div className="bg-[#F7F8F3] border border-[#DFE5DF] rounded-lg p-4 text-xs text-[#5C6E66] flex items-start gap-3">
-        <Info className="w-4 h-4 text-[#7657B8] shrink-0 mt-0.5" />
+      <div className="bg-[var(--surface-secondary)] border border-[var(--border)] rounded-lg p-4 text-xs text-[var(--text-secondary)] flex items-start gap-3">
+        <Info className="w-4 h-4 text-[var(--quantum-violet)] shrink-0 mt-0.5" />
         <div>
-          <strong className="text-[#1A2421]">Technical Simulation Disclosure:</strong>
+          <strong className="text-[var(--text-primary)]">Technical Simulation Disclosure:</strong>
           <p className="mt-0.5 leading-relaxed">
             QAOA optimizes the coupled sensor and communication placement problem formulated as a Quadratic Unconstrained Binary Optimization (QUBO) problem. The statevector simulation is executed using Qiskit 2.5 on a local simulator. No quantum hardware or quantum speedup is claimed for the N+M=8 qubit formulation.
           </p>

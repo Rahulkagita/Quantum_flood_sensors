@@ -34,48 +34,48 @@ export const HeaderNav: React.FC = () => {
   ];
 
   return (
-    <header className="app-header bg-white dark:bg-[#14221D] border-b border-[#DFE5DF] dark:border-[#273D34] transition-colors">
+    <header className="app-header bg-[var(--surface-primary)] border-b border-[var(--border)] transition-colors">
       {/* Brand & Subtitle */}
       <div className="flex items-center gap-3 md:gap-4">
         <Link to="/" className="flex items-center gap-2.5 text-inherit no-underline">
-          <div className="w-8 h-8 rounded-lg bg-[#168A5B] flex items-center justify-center text-white shadow-xs shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-[var(--primary-green)] flex items-center justify-center text-white shadow-xs shrink-0">
             <Droplets className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold tracking-tight text-[#1A2421] dark:text-[#F2F7F4]">
+              <span className="text-sm font-bold tracking-tight text-[var(--text-primary)]">
                 PRAVAAH
               </span>
-              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-[#EEF7F1] dark:bg-[#1F332B] text-[#126B48] dark:text-[#B5E8D2] border border-[#C4E2D3] dark:border-[#273D34]">
+              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[var(--soft-green)] text-[var(--primary-green)] border border-[var(--border)] font-mono">
                 GIS Platform
               </span>
             </div>
-            <p className="text-[11px] text-[#5C6E66] dark:text-[#8FA69B] leading-none mt-0.5 hidden sm:block">
+            <p className="text-[11px] text-[var(--text-secondary)] leading-none mt-0.5 hidden sm:block">
               Flood Intelligence & Response Optimization
             </p>
           </div>
         </Link>
 
         {/* Basin Selector Context */}
-        <div className="h-5 w-px bg-[#DFE5DF] dark:bg-[#273D34] hidden md:block" />
+        <div className="h-5 w-px bg-[var(--border)] hidden md:block" />
 
         <div className="hidden md:flex items-center gap-2.5">
-          <div className="flex items-center gap-1.5 bg-[#F7F8F3] dark:bg-[#0E1714] border border-[#DFE5DF] dark:border-[#273D34] rounded-md px-2.5 py-1 text-xs">
-            <span className="text-[#5C6E66] dark:text-[#8FA69B] text-[11px] font-medium">Basin:</span>
+          <div className="flex items-center gap-1.5 bg-[var(--surface-secondary)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs">
+            <span className="text-[var(--text-secondary)] text-[11px] font-medium">Basin:</span>
             <div className="relative flex items-center">
               <select
                 value={basinId}
                 onChange={(e) => setBasinId(e.target.value as BasinId)}
-                className="bg-transparent font-semibold text-[#126B48] dark:text-[#1EAA71] focus:outline-none cursor-pointer text-xs pr-4 appearance-none"
+                className="bg-transparent font-semibold text-[var(--primary-green)] focus:outline-none cursor-pointer text-xs pr-4 appearance-none"
               >
-                <option value="krishna" className="bg-white dark:bg-[#14221D] text-[#1A2421] dark:text-[#F2F7F4]">
+                <option value="krishna" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">
                   Krishna Basin (80.65°E, 16.50°N)
                 </option>
-                <option value="godavari" className="bg-white dark:bg-[#14221D] text-[#1A2421] dark:text-[#F2F7F4]">
+                <option value="godavari" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">
                   Godavari Basin (81.78°E, 16.98°N)
                 </option>
               </select>
-              <ChevronDown className="w-3 h-3 text-[#126B48] dark:text-[#1EAA71] absolute right-0 pointer-events-none" />
+              <ChevronDown className="w-3 h-3 text-[var(--primary-green)] absolute right-0 pointer-events-none" />
             </div>
           </div>
 
@@ -86,20 +86,6 @@ export const HeaderNav: React.FC = () => {
               {riskData.risk_level} ({riskData.risk_score}/100)
             </div>
           )}
-
-          {/* Data State Indicators */}
-          <div className="hidden xl:flex items-center gap-1.5">
-            <span
-              className="badge-state"
-              data-state="DATASET"
-              title="IMD Rainfall NetCDF & WorldPop 2020 GeoTIFF"
-            >
-              IMD NetCDF + WorldPop
-            </span>
-            <span className="badge-quantum" title="Qiskit 2.5 Statevector Simulator">
-              Qiskit 2.5 Simulation
-            </span>
-          </div>
         </div>
       </div>
 
@@ -125,9 +111,9 @@ export const HeaderNav: React.FC = () => {
                   className={`w-3.5 h-3.5 ${
                     isActive
                       ? item.isQuantum
-                        ? "text-[#7657B8] dark:text-[#9A7FD1]"
-                        : "text-[#168A5B] dark:text-[#1EAA71]"
-                      : "text-[#5C6E66] dark:text-[#8FA69B]"
+                        ? "text-[var(--quantum-violet)]"
+                        : "text-[var(--primary-green)]"
+                      : "text-[var(--text-secondary)]"
                   }`}
                 />
                 <span>{item.label}</span>
@@ -140,16 +126,16 @@ export const HeaderNav: React.FC = () => {
         <button
           onClick={() => setPreference(resolved === "dark" ? "light" : "dark")}
           title={`Switch to ${resolved === "dark" ? "light" : "dark"} mode`}
-          className="p-2 rounded-md bg-[#F7F8F3] dark:bg-[#0E1714] border border-[#DFE5DF] dark:border-[#273D34] text-[#5C6E66] dark:text-[#8FA69B] hover:text-[#1A2421] dark:hover:text-[#F2F7F4] transition-colors"
+          className="p-2 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
         >
-          {resolved === "dark" ? <Sun className="w-4 h-4 text-[#F2C14E]" /> : <Moon className="w-4 h-4 text-[#7657B8]" />}
+          {resolved === "dark" ? <Sun className="w-4 h-4 text-[#E4BD4F]" /> : <Moon className="w-4 h-4 text-[var(--quantum-violet)]" />}
         </button>
 
         {/* Mobile Hamburger Toggle Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle mobile menu"
-          className="p-2 rounded-md bg-[#F7F8F3] dark:bg-[#0E1714] border border-[#DFE5DF] dark:border-[#273D34] text-[#1A2421] dark:text-[#F2F7F4] lg:hidden"
+          className="p-2 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)] text-[var(--text-primary)] lg:hidden"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
@@ -157,14 +143,14 @@ export const HeaderNav: React.FC = () => {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 z-50 bg-white dark:bg-[#14221D] border-b border-[#DFE5DF] dark:border-[#273D34] shadow-lg p-4 space-y-4 lg:hidden animate-in slide-in-from-top-2">
+        <div className="absolute top-full left-0 right-0 z-50 bg-[var(--surface-primary)] border-b border-[var(--border)] shadow-lg p-4 space-y-4 lg:hidden animate-in slide-in-from-top-2">
           {/* Mobile Basin Selector */}
-          <div className="flex items-center justify-between p-2.5 bg-[#F7F8F3] dark:bg-[#0E1714] rounded-md border border-[#DFE5DF] dark:border-[#273D34]">
-            <span className="text-xs font-medium text-[#5C6E66] dark:text-[#8FA69B]">Basin Selection:</span>
+          <div className="flex items-center justify-between p-2.5 bg-[var(--surface-secondary)] rounded-md border border-[var(--border)]">
+            <span className="text-xs font-medium text-[var(--text-secondary)]">Basin Selection:</span>
             <select
               value={basinId}
               onChange={(e) => setBasinId(e.target.value as BasinId)}
-              className="bg-white dark:bg-[#14221D] border border-[#DFE5DF] dark:border-[#273D34] px-2 py-1 rounded font-semibold text-[#126B48] dark:text-[#1EAA71] text-xs outline-none"
+              className="bg-[var(--surface-primary)] border border-[var(--border)] px-2 py-1 rounded font-semibold text-[var(--primary-green)] text-xs outline-none"
             >
               <option value="krishna">Krishna Basin</option>
               <option value="godavari">Godavari Basin</option>
@@ -187,9 +173,9 @@ export const HeaderNav: React.FC = () => {
                   className={`flex items-center gap-3 p-2.5 rounded-md text-xs font-semibold transition-colors ${
                     isActive
                       ? item.isQuantum
-                        ? "bg-[#EEE9F8] dark:bg-[#1F332B] text-[#6343A1] dark:text-[#9A7FD1] border border-[#D8CCE8] dark:border-[#273D34]"
-                        : "bg-[#EEF7F1] dark:bg-[#1F332B] text-[#126B48] dark:text-[#1EAA71] border border-[#C4E2D3] dark:border-[#273D34]"
-                      : "text-[#5C6E66] dark:text-[#8FA69B] hover:bg-[#F7F8F3] dark:hover:bg-[#0E1714]"
+                        ? "bg-[var(--quantum-surface)] text-[var(--quantum-violet)] border border-[var(--quantum-border)]"
+                        : "bg-[var(--soft-green)] text-[var(--primary-green)] border border-[var(--border)]"
+                      : "text-[var(--text-secondary)] hover:bg-[var(--surface-secondary)]"
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -198,16 +184,6 @@ export const HeaderNav: React.FC = () => {
               );
             })}
           </nav>
-
-          {/* Mobile Data Badges */}
-          <div className="flex flex-wrap gap-2 pt-2 border-t border-[#DFE5DF] dark:border-[#273D34]">
-            <span className="badge-state" data-state="DATASET">
-              IMD NetCDF + WorldPop
-            </span>
-            <span className="badge-quantum">
-              Qiskit 2.5 Simulation
-            </span>
-          </div>
         </div>
       )}
     </header>

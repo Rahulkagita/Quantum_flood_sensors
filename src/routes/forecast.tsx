@@ -18,9 +18,6 @@ import {
   ArrowRight,
   Zap,
   BarChart3,
-  Users,
-  Compass,
-  CheckCircle2,
   GitBranch,
 } from "lucide-react";
 import {
@@ -179,20 +176,20 @@ export function ForecastScreen() {
   ];
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 text-[#1A2421] font-sans">
+    <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 text-[var(--text-primary)] font-sans">
       {/* 1. PAGE HEADER */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#DFE5DF] pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <CloudRain className="w-5 h-5 text-[#168A5B]" />
-            <h1 className="text-xl font-bold tracking-tight text-[#1A2421]">
+            <CloudRain className="w-5 h-5 text-[var(--primary-green)]" />
+            <h1 className="text-xl font-bold tracking-tight text-[var(--text-primary)]">
               Flood Forecast & Risk Intelligence
             </h1>
             <span className="badge-state" data-state="LIVE">
               Scientific Model
             </span>
           </div>
-          <p className="text-xs text-[#5C6E66] mt-1 max-w-3xl">
+          <p className="text-xs text-[var(--text-secondary)] mt-1 max-w-3xl">
             Forecast hydro-meteorological conditions, evaluate flood risk, and transform spatial demand into mathematical inputs for quantum network placement.
           </p>
         </div>
@@ -208,19 +205,19 @@ export function ForecastScreen() {
       </div>
 
       {/* 2. CONTROLS & SELECTION */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-4 shadow-xs text-xs">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-4 shadow-xs text-xs">
         <div className="flex items-center gap-4">
           {/* Basin Selector */}
-          <div className="flex items-center gap-1.5 bg-[#F7F8F3] px-2.5 py-1 rounded-md border border-[#DFE5DF]">
-            <span className="text-[#5C6E66] text-[11px] font-medium">Basin:</span>
+          <div className="flex items-center gap-1.5 bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border)]">
+            <span className="text-[var(--text-secondary)] text-[11px] font-medium">Basin:</span>
             {(["krishna", "godavari"] as BasinId[]).map((b) => (
               <button
                 key={b}
                 onClick={() => setBasinId(b)}
                 className={`px-2.5 py-0.5 rounded text-xs font-semibold capitalize transition-colors ${
                   basinId === b
-                    ? "bg-[#168A5B] text-white shadow-xs"
-                    : "text-[#5C6E66] hover:text-[#1A2421]"
+                    ? "bg-[var(--primary-green)] text-white shadow-xs"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 {b}
@@ -229,24 +226,24 @@ export function ForecastScreen() {
           </div>
 
           {/* Scenario Selector */}
-          <div className="flex items-center gap-1.5 bg-[#F7F8F3] px-2.5 py-1 rounded-md border border-[#DFE5DF]">
-            <span className="text-[#5C6E66] text-[11px] font-medium">Precipitation Scenario:</span>
+          <div className="flex items-center gap-1.5 bg-[var(--surface-secondary)] px-2.5 py-1 rounded-md border border-[var(--border)]">
+            <span className="text-[var(--text-secondary)] text-[11px] font-medium">Precipitation Scenario:</span>
             <select
               value={scenario}
               onChange={(e) => setScenario(e.target.value)}
-              className="bg-transparent text-[#1A2421] text-xs font-semibold outline-none cursor-pointer"
+              className="bg-transparent text-[var(--text-primary)] text-xs font-semibold outline-none cursor-pointer"
             >
-              <option value="MONSOON_SURGE">Monsoon Surge (+142.5mm)</option>
-              <option value="EXTREME_CYCLONE">Extreme Cyclone (+210.0mm)</option>
-              <option value="NORMAL">Normal Baseline (+45.0mm)</option>
+              <option value="MONSOON_SURGE" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">Monsoon Surge (+142.5mm)</option>
+              <option value="EXTREME_CYCLONE" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">Extreme Cyclone (+210.0mm)</option>
+              <option value="NORMAL" className="bg-[var(--surface-primary)] text-[var(--text-primary)]">Normal Baseline (+45.0mm)</option>
             </select>
           </div>
         </div>
 
-        <div className="text-xs text-[#5C6E66] flex items-center gap-3">
-          <span>Forecast Horizon: <strong className="text-[#1A2421]">72 Hours (3 Days)</strong></span>
-          <span className="text-[#DFE5DF]">|</span>
-          <span>Basin Catchment: <strong className="text-[#1A2421] capitalize">{basinId} Reach</strong></span>
+        <div className="text-xs text-[var(--text-secondary)] flex items-center gap-3">
+          <span>Forecast Horizon: <strong className="text-[var(--text-primary)]">72 Hours (3 Days)</strong></span>
+          <span className="text-[var(--border)]">|</span>
+          <span>Basin Catchment: <strong className="text-[var(--text-primary)] capitalize">{basinId} Reach</strong></span>
         </div>
       </div>
 
@@ -262,50 +259,50 @@ export function ForecastScreen() {
         ) : (
           <>
             {/* Hazard Probability */}
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66] flex items-center justify-between">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)] flex items-center justify-between">
                 <span>Hazard Probability</span>
-                <TrendingUp className="w-3.5 h-3.5 text-[#168A5B]" />
+                <TrendingUp className="w-3.5 h-3.5 text-[var(--primary-green)]" />
               </div>
-              <div className="text-3xl font-bold text-[#168A5B] mt-1.5">
+              <div className="text-3xl font-bold text-[var(--primary-green)] mt-1.5">
                 {(scParams.hazardProb * 100).toFixed(0)}%
               </div>
-              <div className="text-[11px] text-[#5C6E66] mt-1">High surge confidence</div>
+              <div className="text-[11px] text-[var(--text-secondary)] mt-1">High surge confidence</div>
             </div>
 
             {/* Rainfall Accumulation */}
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66] flex items-center justify-between">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)] flex items-center justify-between">
                 <span>Rainfall Accumulation</span>
-                <CloudRain className="w-3.5 h-3.5 text-[#3E8ED0]" />
+                <CloudRain className="w-3.5 h-3.5 text-[var(--river-blue)]" />
               </div>
-              <div className="text-3xl font-bold text-[#1A2421] mt-1.5">
-                {scParams.rainfallTotal} <span className="text-sm font-normal text-[#5C6E66]">mm</span>
+              <div className="text-3xl font-bold text-[var(--text-primary)] mt-1.5">
+                {scParams.rainfallTotal} <span className="text-sm font-normal text-[var(--text-secondary)]">mm</span>
               </div>
-              <div className="text-[11px] text-[#5C6E66] mt-1">3-day basin total</div>
+              <div className="text-[11px] text-[var(--text-secondary)] mt-1">3-day basin total</div>
             </div>
 
             {/* Precipitation Anomaly */}
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66] flex items-center justify-between">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)] flex items-center justify-between">
                 <span>Precipitation Anomaly</span>
-                <BarChart3 className="w-3.5 h-3.5 text-[#F28C45]" />
+                <BarChart3 className="w-3.5 h-3.5 text-[var(--risk-high)]" />
               </div>
-              <div className="text-xl font-bold text-[#F28C45] mt-2">
+              <div className="text-xl font-bold text-[var(--risk-high)] mt-2">
                 {scParams.anomaly}
               </div>
-              <div className="text-[11px] text-[#5C6E66] mt-1">Vs historical norm</div>
+              <div className="text-[11px] text-[var(--text-secondary)] mt-1">Vs historical norm</div>
             </div>
 
             {/* Risk Score */}
-            <div className="bg-white border border-[#DFE5DF] rounded-lg p-4 shadow-xs">
-              <div className="text-[11px] font-medium text-[#5C6E66] flex items-center justify-between">
+            <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 shadow-xs">
+              <div className="text-[11px] font-medium text-[var(--text-secondary)] flex items-center justify-between">
                 <span>Flood Risk Score</span>
-                <ShieldAlert className="w-3.5 h-3.5 text-[#E85D5A]" />
+                <ShieldAlert className="w-3.5 h-3.5 text-[var(--risk-critical)]" />
               </div>
-              <div className="text-3xl font-bold text-[#1A2421] mt-1.5">
+              <div className="text-3xl font-bold text-[var(--text-primary)] mt-1.5">
                 {activeRisk?.risk_score ?? 78}
-                <span className="text-sm font-normal text-[#5C6E66]"> / 100</span>
+                <span className="text-sm font-normal text-[var(--text-secondary)]"> / 100</span>
               </div>
               <div className="mt-1">
                 <span className="badge-risk text-[10px]" data-risk={activeRisk?.risk_level ?? "HIGH"}>
@@ -320,13 +317,13 @@ export function ForecastScreen() {
       {/* 4. PRECIPITATION FORECAST CHART & RISK EXPLANATION */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Forecast Chart */}
-        <div className="lg:col-span-2 bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-[#DFE5DF] pb-3">
+        <div className="lg:col-span-2 bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
             <div>
-              <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-[#168A5B]" /> 72-Hour Precipitation Forecast Distribution
+              <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-[var(--primary-green)]" /> 72-Hour Precipitation Forecast Distribution
               </h2>
-              <p className="text-xs text-[#5C6E66] mt-0.5">
+              <p className="text-xs text-[var(--text-secondary)] mt-0.5">
                 Scenario: <strong>{scParams.label}</strong> · {basinId.toUpperCase()} Basin
               </p>
             </div>
@@ -341,16 +338,16 @@ export function ForecastScreen() {
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={forecastChartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#EEF2EE" />
-                  <XAxis dataKey="day" stroke="#8FA69B" tick={{ fontSize: 12, fill: "#5C6E66" }} />
-                  <YAxis stroke="#8FA69B" tick={{ fontSize: 12, fill: "#5C6E66" }} unit=" mm" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                  <XAxis dataKey="day" stroke="var(--text-muted)" tick={{ fontSize: 12, fill: "var(--text-secondary)" }} />
+                  <YAxis stroke="var(--text-muted)" tick={{ fontSize: 12, fill: "var(--text-secondary)" }} unit=" mm" />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "#FFFFFF",
-                      borderColor: "#DFE5DF",
-                      color: "#1A2421",
+                      backgroundColor: "var(--surface-primary)",
+                      borderColor: "var(--border)",
+                      color: "var(--text-primary)",
                       borderRadius: "6px",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                       fontSize: "12px",
                     }}
                     formatter={(val: number) => [`${val} mm`, "Expected Rainfall"]}
@@ -361,10 +358,10 @@ export function ForecastScreen() {
                         key={`cell-${index}`}
                         fill={
                           entry.rainfall > 60
-                            ? "#E85D5A"
+                            ? "var(--risk-critical)"
                             : entry.rainfall > 30
-                              ? "#F28C45"
-                              : "#168A5B"
+                              ? "var(--risk-high)"
+                              : "var(--primary-green)"
                         }
                       />
                     ))}
@@ -376,38 +373,38 @@ export function ForecastScreen() {
         </div>
 
         {/* Flood Risk Composite Breakdown */}
-        <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs flex flex-col justify-between space-y-4">
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs flex flex-col justify-between space-y-4">
           <div className="space-y-3">
-            <div className="border-b border-[#DFE5DF] pb-2">
-              <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-[#F28C45]" /> Composite Risk Weights
+            <div className="border-b border-[var(--border)] pb-2">
+              <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-[var(--risk-high)]" /> Composite Risk Weights
               </h2>
-              <p className="text-xs text-[#5C6E66] mt-0.5">Hydrologic & vulnerability factors</p>
+              <p className="text-xs text-[var(--text-secondary)] mt-0.5">Hydrologic & vulnerability factors</p>
             </div>
 
             <div className="space-y-2 text-xs">
-              <div className="p-2.5 rounded-md bg-[#F7F8F3] border border-[#DFE5DF]">
+              <div className="p-2.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)]">
                 <div className="flex justify-between font-medium">
-                  <span className="text-[#5C6E66]">Rainfall Score (45%):</span>
-                  <span className="font-bold text-[#1A2421]">
+                  <span className="text-[var(--text-secondary)]">Rainfall Score (45%):</span>
+                  <span className="font-bold text-[var(--text-primary)]">
                     {activeRisk?.breakdown?.rainfall_score ?? 75.0} / 100
                   </span>
                 </div>
               </div>
 
-              <div className="p-2.5 rounded-md bg-[#F7F8F3] border border-[#DFE5DF]">
+              <div className="p-2.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)]">
                 <div className="flex justify-between font-medium">
-                  <span className="text-[#5C6E66]">Rainfall Anomaly (30%):</span>
-                  <span className="font-bold text-[#1A2421]">
+                  <span className="text-[var(--text-secondary)]">Rainfall Anomaly (30%):</span>
+                  <span className="font-bold text-[var(--text-primary)]">
                     {activeRisk?.breakdown?.rainfall_anomaly_score ?? 67.6} / 100
                   </span>
                 </div>
               </div>
 
-              <div className="p-2.5 rounded-md bg-[#F7F8F3] border border-[#DFE5DF]">
+              <div className="p-2.5 rounded-md bg-[var(--surface-secondary)] border border-[var(--border)]">
                 <div className="flex justify-between font-medium">
-                  <span className="text-[#5C6E66]">Population Exposure (25%):</span>
-                  <span className="font-bold text-[#1A2421]">
+                  <span className="text-[var(--text-secondary)]">Population Exposure (25%):</span>
+                  <span className="font-bold text-[var(--text-primary)]">
                     {activeRisk?.breakdown?.population_exposure_score ?? 82.0} / 100
                   </span>
                 </div>
@@ -415,7 +412,7 @@ export function ForecastScreen() {
             </div>
           </div>
 
-          <p className="text-xs text-[#5C6E66] bg-[#EEF7F1] p-3 rounded-md border border-[#C4E2D3] leading-relaxed">
+          <p className="text-xs text-[var(--text-secondary)] bg-[var(--soft-green)] p-3 rounded-md border border-[var(--border)] leading-relaxed">
             {activeRisk?.explanation ??
               "Evaluated using gridded IMD series coupled with WorldPop 2020 settlement density to establish downstream priority zones."}
           </p>
@@ -423,15 +420,15 @@ export function ForecastScreen() {
       </div>
 
       {/* 5. SPATIAL RISK MAP */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-3">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-[#168A5B]" /> Spatial Flood Risk Map
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-[var(--primary-green)]" /> Spatial Flood Risk Map
             </h2>
-            <p className="text-xs text-[#5C6E66] mt-0.5">
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               River reaches, risk intensity zones, and candidate sensor placements in{" "}
-              <strong className="text-[#1A2421] capitalize">{basinId} Basin</strong>
+              <strong className="text-[var(--text-primary)] capitalize">{basinId} Basin</strong>
             </p>
           </div>
           <span className="badge-state" data-state="LIVE">
@@ -439,7 +436,7 @@ export function ForecastScreen() {
           </span>
         </div>
 
-        <div className="w-full rounded-lg overflow-hidden border border-[#DFE5DF]">
+        <div className="w-full rounded-lg overflow-hidden border border-[var(--border)]">
           <CommandMap
             basinId={basinId}
             viewMode="CANDIDATE"
@@ -449,25 +446,25 @@ export function ForecastScreen() {
         </div>
       </div>
 
-      {/* 6. CAUSAL PIPELINE BANNER: RAINFALL -> FLOOD RISK -> EXPOSURE -> RESPONSE DEMAND */}
-      <div className="bg-[#EEF7F1] border border-[#C4E2D3] rounded-lg p-4">
-        <div className="text-[11px] font-bold text-[#126B48] uppercase tracking-wider mb-2">
+      {/* 6. CAUSAL PIPELINE BANNER */}
+      <div className="bg-[var(--soft-green)] border border-[var(--border)] rounded-lg p-4">
+        <div className="text-[11px] font-bold text-[var(--primary-green)] uppercase tracking-wider mb-2">
           Causal Intelligence Pipeline
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-center text-xs">
-          <div className="p-3 rounded-md bg-white border border-[#C4E2D3]">
-            <div className="font-bold text-[#126B48]">1. RAINFALL</div>
-            <div className="text-[#5C6E66] text-[11px] mt-0.5">+{scParams.rainfallTotal} mm Forecast</div>
+          <div className="p-3 rounded-md bg-[var(--surface-primary)] border border-[var(--border)]">
+            <div className="font-bold text-[var(--primary-green)]">1. RAINFALL</div>
+            <div className="text-[var(--text-secondary)] text-[11px] mt-0.5">+{scParams.rainfallTotal} mm Forecast</div>
           </div>
-          <div className="p-3 rounded-md bg-white border border-[#C4E2D3]">
-            <div className="font-bold text-[#126B48]">2. FLOOD RISK</div>
-            <div className="text-[#5C6E66] text-[11px] mt-0.5">Risk Score {activeRisk?.risk_score ?? 78}/100</div>
+          <div className="p-3 rounded-md bg-[var(--surface-primary)] border border-[var(--border)]">
+            <div className="font-bold text-[var(--primary-green)]">2. FLOOD RISK</div>
+            <div className="text-[var(--text-secondary)] text-[11px] mt-0.5">Risk Score {activeRisk?.risk_score ?? 78}/100</div>
           </div>
-          <div className="p-3 rounded-md bg-white border border-[#C4E2D3]">
-            <div className="font-bold text-[#126B48]">3. EXPOSURE</div>
-            <div className="text-[#5C6E66] text-[11px] mt-0.5">{((riskData?.population_exposure_count ?? 1240000)/1000000).toFixed(2)}M Population</div>
+          <div className="p-3 rounded-md bg-[var(--surface-primary)] border border-[var(--border)]">
+            <div className="font-bold text-[var(--primary-green)]">3. EXPOSURE</div>
+            <div className="text-[var(--text-secondary)] text-[11px] mt-0.5">{((riskData?.population_exposure_count ?? 1240000)/1000000).toFixed(2)}M Population</div>
           </div>
-          <div className="p-3 rounded-md bg-[#168A5B] text-white">
+          <div className="p-3 rounded-md bg-[var(--primary-green)] text-white">
             <div className="font-bold">4. RESPONSE DEMAND</div>
             <div className="text-white/80 text-[11px] mt-0.5">Coupled QUBO Target</div>
           </div>
@@ -475,13 +472,13 @@ export function ForecastScreen() {
       </div>
 
       {/* 7. SPATIAL DEMAND HOTSPOTS TABLE */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-4">
-        <div className="flex items-center justify-between border-b border-[#DFE5DF] pb-3">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
           <div>
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <Zap className="w-4 h-4 text-[#168A5B]" /> Response Demand Hotspots
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <Zap className="w-4 h-4 text-[var(--primary-green)]" /> Response Demand Hotspots
             </h2>
-            <p className="text-xs text-[#5C6E66] mt-0.5">
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               Spatial priority zones converted into demand weights for quantum optimization
             </p>
           </div>
@@ -493,7 +490,7 @@ export function ForecastScreen() {
           ) : (
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-[#DFE5DF] text-[#5C6E66] bg-[#F7F8F3]">
+                <tr className="border-b border-[var(--border)] text-[var(--text-secondary)] bg-[var(--surface-secondary)]">
                   <th className="p-3">Hotspot ID</th>
                   <th className="p-3">Zone Name</th>
                   <th className="p-3">Coordinates</th>
@@ -503,15 +500,15 @@ export function ForecastScreen() {
                   <th className="p-3">Priority</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#DFE5DF]">
+              <tbody className="divide-y divide-[var(--border)]">
                 {demandHotspots.map((d) => (
-                  <tr key={d.id} className="hover:bg-[#F7F8F3] transition-colors">
-                    <td className="p-3 font-semibold text-[#126B48] font-mono">{d.id}</td>
-                    <td className="p-3 font-medium text-[#1A2421]">{d.name}</td>
-                    <td className="p-3 text-[#5C6E66] font-mono">{d.coords}</td>
-                    <td className="p-3 font-bold text-[#1A2421]">{d.riskScore} / 100</td>
-                    <td className="p-3 text-[#5C6E66]">{d.population}</td>
-                    <td className="p-3 font-semibold text-[#168A5B] font-mono">{d.weight}x</td>
+                  <tr key={d.id} className="hover:bg-[var(--surface-secondary)] transition-colors">
+                    <td className="p-3 font-semibold text-[var(--primary-green)] font-mono">{d.id}</td>
+                    <td className="p-3 font-medium text-[var(--text-primary)]">{d.name}</td>
+                    <td className="p-3 text-[var(--text-secondary)] font-mono">{d.coords}</td>
+                    <td className="p-3 font-bold text-[var(--text-primary)]">{d.riskScore} / 100</td>
+                    <td className="p-3 text-[var(--text-secondary)]">{d.population}</td>
+                    <td className="p-3 font-semibold text-[var(--primary-green)] font-mono">{d.weight}x</td>
                     <td className="p-3">
                       <span className="badge-risk text-[10px]" data-risk={d.priority}>
                         {d.priority}
@@ -526,13 +523,13 @@ export function ForecastScreen() {
       </div>
 
       {/* 8. ML vs QML BENCHMARK SECTION */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-5 shadow-xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DFE5DF] pb-3">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
           <div>
-            <h2 className="text-sm font-bold text-[#1A2421] flex items-center gap-2">
-              <GitBranch className="w-4 h-4 text-[#7657B8]" /> Classical ML vs Quantum ML Benchmark Comparison
+            <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <GitBranch className="w-4 h-4 text-[var(--quantum-violet)]" /> Classical ML vs Quantum ML Benchmark Comparison
             </h2>
-            <p className="text-xs text-[#5C6E66] mt-0.5">
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               Empirical evaluation comparing classical machine learning algorithms against quantum feature maps and QAOA
             </p>
           </div>
@@ -542,21 +539,21 @@ export function ForecastScreen() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-[#DFE5DF] text-[#5C6E66] bg-[#F7F8F3]">
+              <tr className="border-b border-[var(--border)] text-[var(--text-secondary)] bg-[var(--surface-secondary)]">
                 <th className="p-3">Evaluation Pipeline Stage</th>
                 <th className="p-3">Classical ML Baseline</th>
                 <th className="p-3">Quantum ML / QAOA Method</th>
                 <th className="p-3">Performance Advantage</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#DFE5DF]">
+            <tbody className="divide-y divide-[var(--border)]">
               {mlBenchmarkData.map((b, idx) => (
-                <tr key={idx} className="hover:bg-[#F7F8F3] transition-colors">
-                  <td className="p-3 font-semibold text-[#1A2421]">{b.metric}</td>
-                  <td className="p-3 text-[#5C6E66]">{b.classicalML}</td>
-                  <td className="p-3 font-semibold text-[#7657B8]">{b.qmlModel}</td>
+                <tr key={idx} className="hover:bg-[var(--surface-secondary)] transition-colors">
+                  <td className="p-3 font-semibold text-[var(--text-primary)]">{b.metric}</td>
+                  <td className="p-3 text-[var(--text-secondary)]">{b.classicalML}</td>
+                  <td className="p-3 font-semibold text-[var(--quantum-violet)]">{b.qmlModel}</td>
                   <td className="p-3">
-                    <span className="px-2 py-0.5 rounded bg-[#EEE9F8] text-[#6343A1] border border-[#D8CCE8] font-semibold text-[11px]">
+                    <span className="px-2 py-0.5 rounded bg-[var(--quantum-surface)] text-[var(--quantum-violet)] border border-[var(--quantum-border)] font-semibold text-[11px]">
                       {b.gain}
                     </span>
                   </td>
@@ -568,22 +565,22 @@ export function ForecastScreen() {
       </div>
 
       {/* 9. CTA TO QUANTUM OPTIMIZER */}
-      <div className="bg-white border border-[#DFE5DF] rounded-lg p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-1">
-          <div className="text-xs font-semibold text-[#7657B8] uppercase tracking-wider flex items-center gap-1.5">
+          <div className="text-xs font-semibold text-[var(--quantum-violet)] uppercase tracking-wider flex items-center gap-1.5">
             <Cpu className="w-4 h-4" /> Next: Quantum Optimization Stage
           </div>
-          <h3 className="text-base font-bold text-[#1A2421]">
+          <h3 className="text-base font-bold text-[var(--text-primary)]">
             Send Spatial Demand to Coupled QUBO / QAOA Solver
           </h3>
-          <p className="text-xs text-[#5C6E66]">
+          <p className="text-xs text-[var(--text-secondary)]">
             Optimize limited sensors and communication relays against these spatial demand weights.
           </p>
         </div>
 
         <Link
           to="/quantum-optimizer"
-          className="py-2.5 px-5 bg-[#168A5B] hover:bg-[#126B48] text-white font-semibold text-xs rounded-md shadow-xs flex items-center gap-2 transition-colors shrink-0"
+          className="py-2.5 px-5 bg-[var(--primary-green)] text-white font-semibold text-xs rounded-md shadow-xs flex items-center gap-2 transition-colors shrink-0"
         >
           Quantum Optimize Network <ArrowRight className="w-4 h-4" />
         </Link>

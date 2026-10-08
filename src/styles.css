@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -32,104 +31,126 @@
   --color-ring: var(--ring);
 
   /* PRAVAAH Brand Tokens */
-  --color-pravaah-green: #168A5B;
-  --color-deep-green: #126B48;
-  --color-soft-green: #EEF7F1;
-  --color-river-blue: #3E8ED0;
-  --color-water-light: #DCEEF7;
-  --color-warm-white: #F7F8F3;
+  --color-pravaah-green: var(--primary-green);
+  --color-deep-green: var(--deep-green);
+  --color-soft-green: var(--soft-green);
+  --color-river-blue: var(--river-blue);
+  --color-water-light: var(--water-light);
+  --color-warm-white: var(--bg-app);
 
   /* Risk Tokens */
-  --color-risk-low: #55B878;
-  --color-risk-watch: #F2C14E;
-  --color-risk-high: #F28C45;
-  --color-risk-critical: #E85D5A;
+  --color-risk-low: var(--risk-low);
+  --color-risk-watch: var(--risk-watch);
+  --color-risk-high: var(--risk-high);
+  --color-risk-critical: var(--risk-critical);
 
-  /* Restrained Quantum Tokens */
-  --color-quantum-violet: #7657B8;
-  --color-quantum-light: #EEE9F8;
+  /* Quantum Tokens */
+  --color-quantum-violet: var(--quantum-violet);
+  --color-quantum-light: var(--quantum-surface);
 }
 
-/* ===== PRAVAAH Light GIS Palette (Primary Default) ===== */
+/* ===== PRAVAAH Light GIS Palette ===== */
 :root {
   --radius: 0.5rem;
-  --background: #F7F8F3;
-  --surface: #FFFFFF;
-  --elevated: #FFFFFF;
-  --foreground: #1A2421;
-  --muted-foreground: #5C6E66;
-  --card: #FFFFFF;
-  --card-foreground: #1A2421;
-  --popover: #FFFFFF;
-  --popover-foreground: #1A2421;
-  --primary: #168A5B;
-  --primary-foreground: #FFFFFF;
-  --secondary: #EEF7F1;
-  --secondary-foreground: #126B48;
-  --muted: #EEF2EE;
-  --accent: #E3EFE7;
-  --accent-foreground: #126B48;
-  --destructive: #E85D5A;
-  --destructive-foreground: #FFFFFF;
-  --border: #DFE5DF;
-  --input: #DFE5DF;
-  --ring: #168A5B;
 
-  /* River & GIS */
-  --river-blue: #3E8ED0;
+  --bg-app: #F7F8F3;
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #F0F3F0;
+  --surface-elevated: #E6ECE6;
+  --border: #DFE5DF;
+  --border-strong: #C4D0C4;
+  --text-primary: #1A2421;
+  --text-secondary: #5C6E66;
+  --text-muted: #7F8D85;
+
+  --primary-green: #168A5B;
+  --deep-green: #126B48;
+  --soft-green: #EEF7F1;
+
+  --river-blue: #2B79C2;
   --water-light: #DCEEF7;
 
-  /* Semantic Flood Risk */
-  --risk-low: #55B878;
-  --risk-watch: #F2C14E;
-  --risk-high: #F28C45;
-  --risk-critical: #E85D5A;
-
-  /* Quantum Computing Isolated Tokens */
-  --quantum-accent: #7657B8;
+  --quantum-violet: #7657B8;
   --quantum-surface: #EEE9F8;
   --quantum-border: #D8CCE8;
 
-  --overlay: rgba(255, 255, 255, 0.96);
-}
-
-/* In dark class, maintain an elegant deep slate-green scientific tone if needed */
-.dark {
-  --background: #0E1714;
-  --surface: #14221D;
-  --elevated: #1B2C26;
-  --foreground: #F2F7F4;
-  --muted-foreground: #8FA69B;
-  --card: #14221D;
-  --card-foreground: #F2F7F4;
-  --popover: #1B2C26;
-  --popover-foreground: #F2F7F4;
-  --primary: #1EAA71;
-  --primary-foreground: #0E1714;
-  --secondary: #1F332B;
-  --secondary-foreground: #B5E8D2;
-  --muted: #1A2923;
-  --accent: #233B32;
-  --accent-foreground: #B5E8D2;
-  --destructive: #E85D5A;
-  --destructive-foreground: #FFFFFF;
-  --border: #273D34;
-  --input: #273D34;
-  --ring: #1EAA71;
-
-  --river-blue: #4FA2E6;
-  --water-light: #162E3D;
-
   --risk-low: #55B878;
-  --risk-watch: #F2C14E;
+  --risk-watch: #D97706;
   --risk-high: #F28C45;
   --risk-critical: #E85D5A;
 
-  --quantum-accent: #9A7FD1;
-  --quantum-surface: rgba(118, 87, 184, 0.16);
-  --quantum-border: rgba(154, 127, 209, 0.35);
+  --overlay-bg: rgba(255, 255, 255, 0.96);
 
-  --overlay: rgba(20, 34, 29, 0.95);
+  /* Standard Tailwind Map Mappings */
+  --background: var(--bg-app);
+  --foreground: var(--text-primary);
+  --card: var(--surface-primary);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-primary);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--primary-green);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--surface-secondary);
+  --secondary-foreground: var(--deep-green);
+  --muted: var(--surface-secondary);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--soft-green);
+  --accent-foreground: var(--deep-green);
+  --destructive: var(--risk-critical);
+  --destructive-foreground: #FFFFFF;
+  --input: var(--border);
+  --ring: var(--primary-green);
+}
+
+/* ===== PRAVAAH Premium Dark GIS Palette ===== */
+.dark {
+  --bg-app: #0B1210;
+  --surface-primary: #111B17;
+  --surface-secondary: #16221D;
+  --surface-elevated: #1B2923;
+  --border: #293831;
+  --border-strong: #3D5248;
+  --text-primary: #F1F5F2;
+  --text-secondary: #B0BCB5;
+  --text-muted: #7F8D85;
+
+  --primary-green: #43B982;
+  --deep-green: #2D9B6F;
+  --soft-green: rgba(67, 185, 130, 0.15);
+
+  --river-blue: #66A9E8;
+  --water-light: rgba(102, 169, 232, 0.15);
+
+  --quantum-violet: #A58ADF;
+  --quantum-surface: rgba(165, 138, 223, 0.15);
+  --quantum-border: rgba(165, 138, 223, 0.35);
+
+  --risk-low: #55B878;
+  --risk-watch: #E4BD4F;
+  --risk-high: #F28C45;
+  --risk-critical: #E85D5A;
+
+  --overlay-bg: rgba(17, 27, 23, 0.92);
+
+  /* Standard Tailwind Map Mappings */
+  --background: var(--bg-app);
+  --foreground: var(--text-primary);
+  --card: var(--surface-primary);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-primary);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--primary-green);
+  --primary-foreground: #0B1210;
+  --secondary: var(--surface-secondary);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-secondary);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--surface-elevated);
+  --accent-foreground: var(--primary-green);
+  --destructive: var(--risk-critical);
+  --destructive-foreground: #FFFFFF;
+  --input: var(--border);
+  --ring: var(--primary-green);
 }
 
 @layer base {
@@ -138,6 +159,7 @@
   }
   html {
     background: var(--background);
+    color: var(--foreground);
   }
   body {
     margin: 0;
@@ -172,31 +194,27 @@
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  color: var(--deep-green);
+  background: var(--soft-green);
+  border: 1px solid var(--border);
 }
-.badge-state[data-state="LIVE"] {
-  color: #126B48;
-  background: #EEF7F1;
-  border: 1px solid #C4E2D3;
-}
+.badge-state[data-state="LIVE"],
+.badge-state[data-state="OPTIMIZED"],
 .badge-state[data-state="DATASET"] {
-  color: #168A5B;
-  background: #EEF7F1;
-  border: 1px solid #C4E2D3;
+  color: var(--primary-green);
+  background: var(--soft-green);
+  border-color: var(--border);
 }
-.badge-state[data-state="SIMULATED"] {
-  color: #9C6615;
-  background: #FEF7E6;
-  border: 1px solid #F6DDA8;
+.badge-state[data-state="SIMULATED"],
+.badge-state[data-state="WATCH"] {
+  color: var(--risk-watch);
+  background: rgba(228, 189, 79, 0.12);
+  border-color: rgba(228, 189, 79, 0.3);
 }
 .badge-state[data-state="UNAVAILABLE"] {
-  color: #5C6E66;
-  background: #EEF2EE;
-  border: 1px solid #DFE5DF;
-}
-.badge-state[data-state="OPTIMIZED"] {
-  color: #126B48;
-  background: #EEF7F1;
-  border: 1px solid #A8D9C0;
+  color: var(--text-muted);
+  background: var(--surface-secondary);
+  border-color: var(--border);
 }
 
 /* Genuine Quantum Badge */
@@ -211,9 +229,9 @@
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: #6343A1;
-  background: #EEE9F8;
-  border: 1px solid #D8CCE8;
+  color: var(--quantum-violet);
+  background: var(--quantum-surface);
+  border: 1px solid var(--quantum-border);
 }
 
 /* Flood Risk Level Badges */
@@ -230,25 +248,25 @@
   text-transform: uppercase;
 }
 .badge-risk[data-risk="LOW"] {
-  color: #267A45;
-  background: #EAF7EE;
-  border: 1px solid #B8E4C6;
+  color: var(--risk-low);
+  background: rgba(85, 184, 120, 0.15);
+  border: 1px solid rgba(85, 184, 120, 0.3);
 }
 .badge-risk[data-risk="WATCH"] {
-  color: #946808;
-  background: #FEF9EB;
-  border: 1px solid #FBE4A8;
+  color: var(--risk-watch);
+  background: rgba(228, 189, 79, 0.15);
+  border: 1px solid rgba(228, 189, 79, 0.3);
 }
 .badge-risk[data-risk="WARNING"],
 .badge-risk[data-risk="HIGH"] {
-  color: #B55014;
-  background: #FDF0E6;
-  border: 1px solid #F8CBB1;
+  color: var(--risk-high);
+  background: rgba(242, 140, 69, 0.15);
+  border: 1px solid rgba(242, 140, 69, 0.3);
 }
 .badge-risk[data-risk="CRITICAL"] {
-  color: #B02A27;
-  background: #FDEDEC;
-  border: 1px solid #F6B8B6;
+  color: var(--risk-critical);
+  background: rgba(232, 93, 90, 0.15);
+  border: 1px solid rgba(232, 93, 90, 0.3);
 }
 
 /* Modern GIS Navigation Header */
@@ -261,9 +279,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
-  background: #FFFFFF;
-  border-bottom: 1px solid #DFE5DF;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  background: var(--surface-primary);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .nav-rail {
@@ -278,7 +296,7 @@
   gap: 0.45rem;
   padding: 0.45rem 0.85rem;
   border-radius: 0.375rem;
-  color: #5C6E66;
+  color: var(--text-secondary);
   font-size: 0.825rem;
   font-family: var(--font-sans);
   font-weight: 500;
@@ -287,19 +305,19 @@
   transition: all 0.15s ease-in-out;
 }
 .nav-item:hover {
-  color: #126B48;
-  background: #EEF7F1;
+  color: var(--primary-green);
+  background: var(--soft-green);
 }
 .nav-item[data-active="true"] {
-  color: #126B48;
-  background: #EEF7F1;
-  border: 1px solid #C4E2D3;
+  color: var(--primary-green);
+  background: var(--soft-green);
+  border: 1px solid var(--border);
   font-weight: 600;
 }
 .nav-item[data-quantum="true"][data-active="true"] {
-  color: #6343A1;
-  background: #EEE9F8;
-  border: 1px solid #D8CCE8;
+  color: var(--quantum-violet);
+  background: var(--quantum-surface);
+  border: 1px solid var(--quantum-border);
 }
 
 /* Map Containers */
@@ -307,28 +325,18 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 3.75rem);
-  background: #E8ECE8;
+  background: var(--bg-app);
 }
 
 /* Elegant Scientific Card Overlay */
 .hud-card {
-  background: #FFFFFF;
-  border: 1px solid #DFE5DF;
+  background: var(--surface-primary);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  box-shadow: 0 4px 16px rgba(18, 107, 72, 0.06);
-}
-.dark .hud-card {
-  background: var(--card);
-  border-color: var(--border);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-.dark .app-header {
-  background: var(--surface);
-  border-color: var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* Table Utilities */
 table {
   font-variant-numeric: tabular-nums;
 }
-

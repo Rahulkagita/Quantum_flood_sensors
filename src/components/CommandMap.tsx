@@ -4,6 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { mapStyles, buildStyle, BasemapId } from "../lib/map-config";
 import { basinsGeoJSON, riversGeoJSON, riskGeoJSON, circlePolygon, LngLat } from "../lib/geo-data";
 import { Eye, EyeOff, Layers } from "lucide-react";
+import { useTheme } from "../lib/theme";
 
 export interface CommandMapProps {
   basinId: "krishna" | "godavari";
@@ -36,7 +37,12 @@ export const CommandMap: React.FC<CommandMapProps> = ({
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const [activeBasemap, setActiveBasemap] = useState<BasemapId>("light");
+  const { resolved } = useTheme();
+  const [activeBasemap, setActiveBasemap] = useState<BasemapId>(resolved === "dark" ? "dark" : "light");
+
+  useEffect(() => {
+    setActiveBasemap(resolved === "dark" ? "dark" : "light");
+  }, [resolved]);
 
   // PRAVAAH Layer Visibility Controls
   const [layers, setLayers] = useState({
@@ -654,31 +660,31 @@ export const CommandMap: React.FC<CommandMapProps> = ({
 
   return (
     <div className="relative w-full" style={{ height }}>
-      <div ref={mapContainerRef} className="absolute inset-0 w-full h-full bg-[#EBF0EB]" />
+      <div ref={mapContainerRef} className="absolute inset-0 w-full h-full bg-[var(--bg-app)]" />
 
       {/* Floating Basemap & Layer Control Widget */}
       <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-        <div className="bg-white/95 border border-[#DFE5DF] backdrop-blur-md rounded-lg p-1.5 flex items-center gap-1 shadow-sm">
+        <div className="bg-[var(--overlay-bg)] border border-[var(--border)] backdrop-blur-md rounded-lg p-1.5 flex items-center gap-1 shadow-sm">
           {basemapOptions.map((s) => (
             <button
               key={s.id}
               onClick={() => setActiveBasemap(s.id)}
               className={`px-2.5 py-1 text-xs rounded-md font-medium transition-colors ${
                 activeBasemap === s.id
-                  ? "bg-[#EEF7F1] text-[#126B48] border border-[#C4E2D3] font-semibold"
-                  : "text-[#5C6E66] hover:text-[#1A2421]"
+                  ? "bg-[var(--soft-green)] text-[var(--primary-green)] border border-[var(--border)] font-semibold"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
               {s.label}
             </button>
           ))}
-          <div className="h-4 w-px bg-[#DFE5DF] mx-1" />
+          <div className="h-4 w-px bg-[var(--border)] mx-1" />
           <button
             onClick={() => setShowLayerMenu(!showLayerMenu)}
             className={`px-2.5 py-1 text-xs rounded-md flex items-center gap-1.5 border transition-colors ${
               showLayerMenu
-                ? "bg-[#168A5B] border-[#168A5B] text-white font-medium"
-                : "bg-white border-[#DFE5DF] text-[#1A2421] hover:bg-[#F7F8F3]"
+                ? "bg-[var(--primary-green)] border-[var(--primary-green)] text-white font-medium"
+                : "bg-[var(--surface-primary)] border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--surface-secondary)]"
             }`}
           >
             <Layers className="w-3.5 h-3.5" /> Layers
@@ -687,8 +693,8 @@ export const CommandMap: React.FC<CommandMapProps> = ({
 
         {/* Clean Layer Visibility Menu */}
         {showLayerMenu && (
-          <div className="bg-white/95 border border-[#DFE5DF] backdrop-blur-md rounded-lg p-3 text-xs space-y-2 w-56 shadow-lg">
-            <div className="text-[11px] text-[#5C6E66] font-semibold uppercase tracking-wider border-b border-[#DFE5DF] pb-1.5">
+          <div className="bg-[var(--overlay-bg)] border border-[var(--border)] backdrop-blur-md rounded-lg p-3 text-xs space-y-2 w-56 shadow-lg">
+            <div className="text-[11px] text-[var(--text-secondary)] font-semibold uppercase tracking-wider border-b border-[var(--border)] pb-1.5">
               GIS Layer Controls
             </div>
             <div className="space-y-1.5 pt-1">
@@ -706,15 +712,15 @@ export const CommandMap: React.FC<CommandMapProps> = ({
                 <button
                   key={key}
                   onClick={() => toggleLayer(key)}
-                  className="w-full flex items-center justify-between text-xs px-2 py-1.5 rounded-md hover:bg-[#EEF7F1] transition-colors"
+                  className="w-full flex items-center justify-between text-xs px-2 py-1.5 rounded-md hover:bg-[var(--soft-green)] transition-colors"
                 >
-                  <span className={layers[key] ? "text-[#1A2421] font-medium" : "text-[#8FA69B]"}>
+                  <span className={layers[key] ? "text-[var(--text-primary)] font-medium" : "text-[var(--text-muted)]"}>
                     {label}
                   </span>
                   {layers[key] ? (
-                    <Eye className="w-3.5 h-3.5 text-[#168A5B]" />
+                    <Eye className="w-3.5 h-3.5 text-[var(--primary-green)]" />
                   ) : (
-                    <EyeOff className="w-3.5 h-3.5 text-[#B3C0B8]" />
+                    <EyeOff className="w-3.5 h-3.5 text-[var(--text-muted)]" />
                   )}
                 </button>
               ))}

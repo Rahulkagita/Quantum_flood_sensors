@@ -7,7 +7,7 @@ import { GitFork, Sliders } from "lucide-react";
 
 export const Route = createFileRoute("/scenarios")({
   head: () => ({
-    meta: [{ title: "Scenarios — Quantum Flood Response Command Center" }],
+    meta: [{ title: "Adaptive Scenario Analysis — PRAVAAH" }],
   }),
   component: ScenariosScreen,
 });
@@ -20,18 +20,18 @@ export function ScenariosScreen() {
   const [cycloneOpt, setCycloneOpt] = useState<CoupledOptimizationResponse | null>(null);
 
   useEffect(() => {
-    runCoupledOptimization({ basin_id: basinId, scenario: "NORMAL", surge_probability: 0.5 }).then(
+    runCoupledOptimization({ basin_id: basinId, scenario: "NORMAL", surge_intensity: 0.25 }).then(
       setNormalOpt,
     );
     runCoupledOptimization({
       basin_id: basinId,
       scenario: "MONSOON_SURGE",
-      surge_probability: 0.8,
+      surge_intensity: 0.8,
     }).then(setSurgeOpt);
     runCoupledOptimization({
       basin_id: basinId,
       scenario: "EXTREME_CYCLONE",
-      surge_probability: 0.95,
+      surge_intensity: 1.25,
     }).then(setCycloneOpt);
   }, [basinId]);
 
@@ -44,21 +44,20 @@ export function ScenariosScreen() {
   const metrics = activeOpt?.metrics;
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6 text-slate-100 font-mono">
+    <div className="p-6 max-w-7xl mx-auto space-y-6 text-[var(--text-primary)] font-sans">
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold uppercase tracking-wider text-slate-100 flex items-center gap-2">
-              <GitFork className="w-5 h-5 text-cyan-400" /> ADAPTIVE SCENARIO ANALYSIS
+            <h1 className="text-xl font-bold tracking-tight text-[var(--text-primary)] flex items-center gap-2">
+              <GitFork className="w-5 h-5 text-[var(--primary-green)]" /> Adaptive Scenario Analysis
             </h1>
             <span className="badge-state" data-state="SIMULATED">
-              DETERMINISTIC SIMULATION
+              Deterministic Simulation
             </span>
           </div>
-          <p className="text-xs text-slate-400 font-sans mt-1">
-            Simulate changing flood surge conditions & inspect dynamic network movement (Region A →
-            Region B)
+          <p className="text-xs text-[var(--text-secondary)] mt-1">
+            Simulate changing flood surge conditions & inspect dynamic network movement across high-risk reaches.
           </p>
         </div>
 
@@ -66,40 +65,40 @@ export function ScenariosScreen() {
         <div className="flex items-center gap-2 text-xs">
           <button
             onClick={() => setSelectedScenario("NORMAL")}
-            className={`px-3 py-2 rounded border font-bold transition-colors ${
+            className={`px-3 py-2 rounded border font-semibold transition-colors ${
               selectedScenario === "NORMAL"
-                ? "bg-cyan-950 border-cyan-500 text-cyan-400"
-                : "bg-slate-900 border-slate-800 text-slate-400"
+                ? "bg-[var(--soft-green)] border-[var(--border)] text-[var(--primary-green)]"
+                : "bg-[var(--surface-secondary)] border-[var(--border)] text-[var(--text-secondary)]"
             }`}
           >
-            1. NORMAL MONSOON
+            1. Normal Baseline
           </button>
           <button
             onClick={() => setSelectedScenario("MONSOON_SURGE")}
-            className={`px-3 py-2 rounded border font-bold transition-colors ${
+            className={`px-3 py-2 rounded border font-semibold transition-colors ${
               selectedScenario === "MONSOON_SURGE"
-                ? "bg-amber-950 border-amber-500 text-amber-400"
-                : "bg-slate-900 border-slate-800 text-slate-400"
+                ? "bg-[rgba(242,140,69,0.15)] border-[rgba(242,140,69,0.3)] text-[var(--risk-high)]"
+                : "bg-[var(--surface-secondary)] border-[var(--border)] text-[var(--text-secondary)]"
             }`}
           >
-            2. MONSOON SURGE
+            2. Monsoon Surge
           </button>
           <button
             onClick={() => setSelectedScenario("EXTREME_CYCLONE")}
-            className={`px-3 py-2 rounded border font-bold transition-colors ${
+            className={`px-3 py-2 rounded border font-semibold transition-colors ${
               selectedScenario === "EXTREME_CYCLONE"
-                ? "bg-red-950 border-red-500 text-red-400"
-                : "bg-slate-900 border-slate-800 text-slate-400"
+                ? "bg-[rgba(232,93,90,0.15)] border-[rgba(232,93,90,0.3)] text-[var(--risk-critical)]"
+                : "bg-[var(--surface-secondary)] border-[var(--border)] text-[var(--text-secondary)]"
             }`}
           >
-            3. EXTREME CYCLONE
+            3. Extreme Cyclone
           </button>
         </div>
       </div>
 
       {/* Scenario Map & Network Shift Inspection */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 h-[400px] rounded border border-slate-800 overflow-hidden relative">
+        <div className="md:col-span-2 h-[400px] rounded border border-[var(--border)] overflow-hidden relative">
           <CommandMap
             basinId={basinId}
             selectedSensors={metrics?.selected_sensors || []}
@@ -109,9 +108,9 @@ export function ScenariosScreen() {
         </div>
 
         {/* Active Scenario Insights Box */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs text-slate-400 uppercase">ACTIVE SCENARIO</span>
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+            <span className="text-xs text-[var(--text-secondary)] uppercase">Active Scenario</span>
             <span
               className="badge-risk"
               data-risk={
@@ -127,26 +126,26 @@ export function ScenariosScreen() {
           </div>
 
           <div className="space-y-3 text-xs">
-            <div className="bg-slate-950 p-3 rounded border border-slate-800">
-              <div className="text-slate-500 text-[10px]">OPTIMIZED SENSORS</div>
-              <div className="font-bold text-cyan-300 text-sm mt-0.5">
+            <div className="bg-[var(--surface-secondary)] p-3 rounded border border-[var(--border)]">
+              <div className="text-[var(--text-secondary)] text-[10px]">OPTIMIZED SENSORS</div>
+              <div className="font-bold text-[var(--primary-green)] text-sm mt-0.5 font-mono">
                 {metrics?.selected_sensors.join(", ") ?? "C-KR-001, C-KR-002, C-KR-003"}
               </div>
             </div>
 
-            <div className="bg-slate-950 p-3 rounded border border-slate-800">
-              <div className="text-slate-500 text-[10px]">COMM RELAYS</div>
-              <div className="font-bold text-purple-300 text-sm mt-0.5">
+            <div className="bg-[var(--surface-secondary)] p-3 rounded border border-[var(--border)]">
+              <div className="text-[var(--text-secondary)] text-[10px]">COMM RELAYS</div>
+              <div className="font-bold text-[var(--quantum-violet)] text-sm mt-0.5 font-mono">
                 {metrics?.selected_relays.join(", ") ?? "RL-KR-P1, RL-KR-P2"}
               </div>
             </div>
 
-            <div className="bg-slate-950 p-3 rounded border border-slate-800">
-              <div className="text-slate-500 text-[10px]">DYNAMIC ADAPTATION PROOF</div>
-              <p className="text-[11px] text-slate-300 mt-1 leading-relaxed font-sans">
+            <div className="bg-[var(--surface-secondary)] p-3 rounded border border-[var(--border)]">
+              <div className="text-[var(--text-secondary)] text-[10px]">DYNAMIC ADAPTATION PROOF</div>
+              <p className="text-[11px] text-[var(--text-secondary)] mt-1 leading-relaxed">
                 {selectedScenario === "EXTREME_CYCLONE"
-                  ? "Region B Demand Surge: Optimizer shifted sensor nodes from Vijayawada Delta to Coastal Avanigadda (C-KR-004, C-KR-010)."
-                  : "Region A Demand Surge: Optimizer positioned sensor nodes across Vijayawada Urban Floodplain (C-KR-001, C-KR-002, C-KR-003)."}
+                  ? "Extreme Surge: QUBO optimizer shifted sensor placement to coastal estuary reaches (C-KR-004, C-KR-001)."
+                  : "Normal Surge: QUBO optimizer positioned sensor nodes across Vijayawada Urban Floodplain (C-KR-001, C-KR-002, C-KR-003)."}
               </p>
             </div>
           </div>
@@ -154,57 +153,57 @@ export function ScenariosScreen() {
       </div>
 
       {/* Side-by-Side Scenario Comparison Table */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded p-5 space-y-4">
-        <h2 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-          <Sliders className="w-4 h-4 text-cyan-400" /> SIDE-BY-SIDE SCENARIO COMPARISON MATRIX
+      <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5 space-y-4 shadow-xs">
+        <h2 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <Sliders className="w-4 h-4 text-[var(--primary-green)]" /> Side-by-Side Scenario Comparison Matrix
         </h2>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left font-mono text-xs border-collapse">
+          <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 bg-slate-950/60">
-                <th className="p-3">SCENARIO PARAMETER</th>
-                <th className="p-3 text-cyan-400">NORMAL MONSOON</th>
-                <th className="p-3 text-amber-400">MONSOON SURGE (+25%)</th>
-                <th className="p-3 text-red-400">EXTREME CYCLONE (Region B)</th>
+              <tr className="border-b border-[var(--border)] text-[var(--text-secondary)] bg-[var(--surface-secondary)] font-mono">
+                <th className="p-3">Scenario Parameter</th>
+                <th className="p-3 text-[var(--primary-green)]">Normal Baseline</th>
+                <th className="p-3 text-[var(--risk-high)]">Monsoon Surge</th>
+                <th className="p-3 text-[var(--risk-critical)]">Extreme Cyclone</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
-              <tr className="hover:bg-slate-800/30">
-                <td className="p-3 font-semibold text-slate-400">Risk Score & Level</td>
-                <td className="p-3 text-slate-200 font-bold">62 (WATCH)</td>
-                <td className="p-3 text-amber-400 font-bold">78 (WARNING)</td>
-                <td className="p-3 text-red-400 font-bold">92 (CRITICAL)</td>
+            <tbody className="divide-y divide-[var(--border)]">
+              <tr className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="p-3 font-semibold text-[var(--text-primary)]">Risk Score & Level</td>
+                <td className="p-3 text-[var(--text-primary)] font-bold">52 (WATCH)</td>
+                <td className="p-3 text-[var(--risk-high)] font-bold">78 (WARNING)</td>
+                <td className="p-3 text-[var(--risk-critical)] font-bold">92 (CRITICAL)</td>
               </tr>
-              <tr className="hover:bg-slate-800/30">
-                <td className="p-3 font-semibold text-slate-400">Surge Probability</td>
-                <td className="p-3 text-slate-300">50%</td>
-                <td className="p-3 text-slate-300">80%</td>
-                <td className="p-3 text-slate-300">95%</td>
+              <tr className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="p-3 font-semibold text-[var(--text-primary)]">Surge Intensity Factor</td>
+                <td className="p-3 text-[var(--text-secondary)] font-mono">0.25</td>
+                <td className="p-3 text-[var(--text-secondary)] font-mono">0.80</td>
+                <td className="p-3 text-[var(--text-secondary)] font-mono">1.25</td>
               </tr>
-              <tr className="hover:bg-slate-800/30 bg-slate-950/40">
-                <td className="p-3 font-semibold text-slate-400">Selected Sensors</td>
-                <td className="p-3 text-cyan-300 font-bold">C-KR-001, C-KR-002, C-KR-003</td>
-                <td className="p-3 text-cyan-300 font-bold">C-KR-001, C-KR-002, C-KR-009</td>
-                <td className="p-3 text-red-300 font-bold">C-KR-004, C-KR-010 (Shifted)</td>
+              <tr className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="p-3 font-semibold text-[var(--text-primary)]">Selected Sensors</td>
+                <td className="p-3 text-[var(--primary-green)] font-mono font-bold">C-KR-001, C-KR-003, C-KR-005</td>
+                <td className="p-3 text-[var(--primary-green)] font-mono font-bold">C-KR-001, C-KR-002, C-KR-003</td>
+                <td className="p-3 text-[var(--risk-critical)] font-mono font-bold">C-KR-004, C-KR-001, C-KR-002</td>
               </tr>
-              <tr className="hover:bg-slate-800/30">
-                <td className="p-3 font-semibold text-slate-400">Selected Relays</td>
-                <td className="p-3 text-purple-300 font-bold">RL-KR-P1, RL-KR-P2</td>
-                <td className="p-3 text-purple-300 font-bold">RL-KR-P1, RL-KR-P3</td>
-                <td className="p-3 text-purple-300 font-bold">RL-KR-P2, RL-KR-P3</td>
+              <tr className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="p-3 font-semibold text-[var(--text-primary)]">Selected Relays</td>
+                <td className="p-3 text-[var(--quantum-violet)] font-mono font-bold">RL-KR-P1, RL-KR-P2</td>
+                <td className="p-3 text-[var(--quantum-violet)] font-mono font-bold">RL-KR-P1, RL-KR-P2</td>
+                <td className="p-3 text-[var(--quantum-violet)] font-mono font-bold">RL-KR-P1, RL-KR-P2</td>
               </tr>
-              <tr className="hover:bg-slate-800/30">
-                <td className="p-3 font-semibold text-slate-400">Risk-Weighted Coverage</td>
-                <td className="p-3 text-emerald-400">92.4%</td>
-                <td className="p-3 text-emerald-400">88.4%</td>
-                <td className="p-3 text-emerald-400">86.1%</td>
+              <tr className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="p-3 font-semibold text-[var(--text-primary)]">Risk-Weighted Coverage</td>
+                <td className="p-3 text-[var(--primary-green)] font-mono">88.0%</td>
+                <td className="p-3 text-[var(--primary-green)] font-mono">88.4%</td>
+                <td className="p-3 text-[var(--primary-green)] font-mono">94.0%</td>
               </tr>
-              <tr className="hover:bg-slate-800/30">
-                <td className="p-3 font-semibold text-slate-400">QAOA Objective Score</td>
-                <td className="p-3 text-slate-200">385.20</td>
-                <td className="p-3 text-slate-200">412.50</td>
-                <td className="p-3 text-slate-200">438.90</td>
+              <tr className="hover:bg-[var(--surface-secondary)] transition-colors">
+                <td className="p-3 font-semibold text-[var(--text-primary)]">QAOA Objective Score</td>
+                <td className="p-3 text-[var(--text-primary)] font-mono">420.0</td>
+                <td className="p-3 text-[var(--text-primary)] font-mono">470.0</td>
+                <td className="p-3 text-[var(--text-primary)] font-mono">510.0</td>
               </tr>
             </tbody>
           </table>

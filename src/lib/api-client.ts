@@ -339,22 +339,35 @@ export async function runCoupledOptimization(params: {
   scenario?: string;
   max_sensors?: number;
   max_relays?: number;
+  surge_intensity?: number;
   surge_probability?: number;
   qaoa_depth?: number;
+  optimization_priority?: string;
 }): Promise<CoupledOptimizationResponse> {
+  const scenario = params.scenario || "MONSOON_SURGE";
+  const maxSensors = params.max_sensors ?? 3;
+  const maxRelays = params.max_relays ?? 2;
+  const qaoaDepth = params.qaoa_depth ?? 1;
+
+  let surgeIntensity = params.surge_intensity ?? params.surge_probability;
+  if (surgeIntensity === undefined) {
+    surgeIntensity = scenario === "NORMAL" ? 0.25 : scenario === "EXTREME_CYCLONE" ? 1.25 : 0.80;
+  }
+
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1200);
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
     const res = await fetch(`${API_BASE}/optimization/coupled`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         basin_id: params.basin_id || "krishna",
-        scenario: params.scenario || "MONSOON_SURGE",
-        max_sensors: params.max_sensors ?? 3,
-        max_relays: params.max_relays ?? 2,
-        surge_probability: params.surge_probability ?? 0.8,
-        qaoa_depth: params.qaoa_depth ?? 1,
+        scenario,
+        max_sensors: maxSensors,
+        max_relays: maxRelays,
+        surge_intensity: surgeIntensity,
+        qaoa_depth: qaoaDepth,
+        optimization_priority: params.optimization_priority || "BALANCED",
       }),
       signal: controller.signal,
     });
@@ -365,37 +378,48 @@ export async function runCoupledOptimization(params: {
   }
 
   const isKrishna = params.basin_id === "krishna";
-  const scenario = params.scenario || "MONSOON_SURGE";
   const isRegionB = scenario === "EXTREME_CYCLONE";
 
-  const sensors = isKrishna
-    ? isRegionB
-      ? ["C-KR-004"]
+  const allSensors = isKrishna
+    ? ["C-KR-001", "C-KR-002", "C-KR-003", "C-KR-004", "C-KR-005"]
+    : ["C-GD-001", "C-GD-002", "C-GD-003", "C-GD-004", "C-GD-005"];
+
+  const sensors = (
+    isRegionB
+      ? ["C-KR-004", "C-KR-001", "C-KR-002", "C-KR-003"]
+      : scenario === "NORMAL"
+      ? ["C-KR-001", "C-KR-003", "C-KR-005"]
       : ["C-KR-001", "C-KR-002", "C-KR-003"]
-    : ["C-GD-001", "C-GD-002", "C-GD-003"];
+  ).slice(0, maxSensors);
 
-  const relays = isKrishna ? ["RL-KR-P1", "RL-KR-P2"] : ["RL-GD-P1", "RL-GD-P2"];
+  const allRelays = isKrishna
+    ? ["RL-KR-P1", "RL-KR-P2", "RL-KR-P3"]
+    : ["RL-GD-P1", "RL-GD-P2", "RL-GD-P3"];
 
-  const bitstr = isRegionB ? "00010011" : scenario === "NORMAL" ? "10001001" : "11100011";
+  const relays = allRelays.slice(0, maxRelays);
+
+  const sensorBits = allSensors.map((s) => (sensors.includes(s) ? "1" : "0")).join("");
+  const relayBits = allRelays.map((r) => (relays.includes(r) ? "1" : "0")).join("");
+  const bitstr = sensorBits + relayBits;
 
   return {
     metrics: {
       basin_id: params.basin_id,
       scenario_name: scenario,
       risk_score: isKrishna ? 78 : 88,
-      forecast_probability: params.surge_probability || 0.8,
+      forecast_probability: Number((surgeIntensity * 0.75).toFixed(2)),
       selected_sensors: sensors,
       selected_relays: relays,
       sensor_count: sensors.length,
       relay_count: relays.length,
-      risk_weighted_coverage: 0.884,
-      population_weighted_coverage: 0.912,
-      high_risk_coverage: 0.884,
+      risk_weighted_coverage: Number((0.70 + sensors.length * 0.06).toFixed(3)),
+      population_weighted_coverage: Number((0.75 + sensors.length * 0.05).toFixed(3)),
+      high_risk_coverage: Number((0.72 + sensors.length * 0.05).toFixed(3)),
       disconnected_sensors: [],
-      uncovered_high_risk_demand: 18.5,
-      objective_score: 412.5,
-      qubo_energy: -412.5,
-      qaoa_depth: params.qaoa_depth || 1,
+      uncovered_high_risk_demand: Number((25.0 - sensors.length * 3.5).toFixed(1)),
+      objective_score: Number((300.0 + sensors.length * 40.0 + relays.length * 25.0).toFixed(1)),
+      qubo_energy: -Number((300.0 + sensors.length * 40.0 + relays.length * 25.0).toFixed(1)),
+      qaoa_depth: qaoaDepth,
       approximation_ratio: 0.9929,
       optimality_gap_percent: 0.71,
     },
@@ -403,17 +427,17 @@ export async function runCoupledOptimization(params: {
       bitstring: bitstr,
       num_sensors_N: 5,
       num_relays_M: 3,
-      sensor_bits: bitstr.slice(0, 5),
-      relay_bits: bitstr.slice(5),
+      sensor_bits: sensorBits,
+      relay_bits: relayBits,
       selected_sensor_ids: sensors,
       selected_relay_ids: relays,
       selected_sensors_count: sensors.length,
       selected_relays_count: relays.length,
       active_relay_utilization: {
-        [relays[0] ?? "RL-KR-P1"]: 2,
-        [relays[1] ?? "RL-KR-P2"]: 1,
+        [relays[0] ?? "RL-KR-P1"]: Math.min(2, sensors.length),
+        ...(relays[1] ? { [relays[1]]: Math.max(0, sensors.length - 2) } : {}),
       },
-      is_relay_count_consistent: true,
+      is_relay_count_consistent: relays.length <= maxRelays,
     },
     candidates: [],
     comm_nodes: [],
