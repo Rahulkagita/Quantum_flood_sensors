@@ -13,7 +13,7 @@ from app.schemas.alert_schema import AlertResponse
 from app.forecasting.hardened_forecaster import HardenedForecaster
 from app.forecasting.qml_forecaster import QmlForecaster
 from app.optimization.communication import CommunicationConnectivityModel
-from app.optimization.response import ResponseDemandPoint, SpatialResponseDemandEngine
+from app.response.demand import ResponseDemandPoint, SpatialResponseDemandEngine
 from app.optimization.hardened_coupled_validator import FinalCoupledValidator, ResponseNetworkMetrics, BitstringDecoding
 from app.optimization.experiment import QuantumExperimentManager, ExperimentComparisonResult
 
@@ -25,7 +25,6 @@ scenario_engine = ScenarioEngine()
 alert_service = AlertService()
 hardened_forecaster = HardenedForecaster()
 qml_forecaster = QmlForecaster(num_qubits=2, max_iter=20)
-exp_manager = QuantumExperimentManager()
 
 class OptimizationRequest(BaseModel):
     basin_id: str = Field("krishna", description="Basin ID (krishna | godavari)")
@@ -139,4 +138,5 @@ def run_coupled_optimization(req: OptimizationRequest):
 @router.get("/optimization/benchmark", response_model=ExperimentComparisonResult)
 def get_optimization_benchmark(basin_id: str = "krishna", k_sensors: int = 5):
     cands = cand_generator.generate_candidates(basin_id, max_candidates=10).candidates
-    return exp_manager.run_experiment(candidates=cands, target_sensors=k_sensors, basin_id=basin_id)
+    manager = QuantumExperimentManager(candidates=cands, target_sensors=k_sensors)
+    return manager.run_experiment(experiment_id=f"EXP-{basin_id.upper()}")

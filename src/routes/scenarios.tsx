@@ -7,7 +7,7 @@ import { GitFork, Sliders } from "lucide-react";
 
 export const Route = createFileRoute("/scenarios")({
   head: () => ({
-    meta: [{ title: "Scenarios — Quantum Flood Response Command Center" }]
+    meta: [{ title: "Scenarios — Quantum Flood Response Command Center" }],
   }),
   component: ScenariosScreen,
 });
@@ -20,12 +20,27 @@ export function ScenariosScreen() {
   const [cycloneOpt, setCycloneOpt] = useState<CoupledOptimizationResponse | null>(null);
 
   useEffect(() => {
-    runCoupledOptimization({ basin_id: basinId, scenario: "NORMAL", surge_probability: 0.50 }).then(setNormalOpt);
-    runCoupledOptimization({ basin_id: basinId, scenario: "MONSOON_SURGE", surge_probability: 0.80 }).then(setSurgeOpt);
-    runCoupledOptimization({ basin_id: basinId, scenario: "EXTREME_CYCLONE", surge_probability: 0.95 }).then(setCycloneOpt);
+    runCoupledOptimization({ basin_id: basinId, scenario: "NORMAL", surge_probability: 0.5 }).then(
+      setNormalOpt,
+    );
+    runCoupledOptimization({
+      basin_id: basinId,
+      scenario: "MONSOON_SURGE",
+      surge_probability: 0.8,
+    }).then(setSurgeOpt);
+    runCoupledOptimization({
+      basin_id: basinId,
+      scenario: "EXTREME_CYCLONE",
+      surge_probability: 0.95,
+    }).then(setCycloneOpt);
   }, [basinId]);
 
-  const activeOpt = selectedScenario === "NORMAL" ? normalOpt : selectedScenario === "MONSOON_SURGE" ? surgeOpt : cycloneOpt;
+  const activeOpt =
+    selectedScenario === "NORMAL"
+      ? normalOpt
+      : selectedScenario === "MONSOON_SURGE"
+        ? surgeOpt
+        : cycloneOpt;
   const metrics = activeOpt?.metrics;
 
   return (
@@ -37,10 +52,13 @@ export function ScenariosScreen() {
             <h1 className="text-xl font-bold uppercase tracking-wider text-slate-100 flex items-center gap-2">
               <GitFork className="w-5 h-5 text-cyan-400" /> ADAPTIVE SCENARIO ANALYSIS
             </h1>
-            <span className="badge-state" data-state="SIMULATED">DETERMINISTIC SIMULATION</span>
+            <span className="badge-state" data-state="SIMULATED">
+              DETERMINISTIC SIMULATION
+            </span>
           </div>
           <p className="text-xs text-slate-400 font-sans mt-1">
-            Simulate changing flood surge conditions & inspect dynamic network movement (Region A → Region B)
+            Simulate changing flood surge conditions & inspect dynamic network movement (Region A →
+            Region B)
           </p>
         </div>
 
@@ -96,7 +114,13 @@ export function ScenariosScreen() {
             <span className="text-xs text-slate-400 uppercase">ACTIVE SCENARIO</span>
             <span
               className="badge-risk"
-              data-risk={selectedScenario === "EXTREME_CYCLONE" ? "CRITICAL" : selectedScenario === "MONSOON_SURGE" ? "WARNING" : "WATCH"}
+              data-risk={
+                selectedScenario === "EXTREME_CYCLONE"
+                  ? "CRITICAL"
+                  : selectedScenario === "MONSOON_SURGE"
+                    ? "WARNING"
+                    : "WATCH"
+              }
             >
               {selectedScenario}
             </span>

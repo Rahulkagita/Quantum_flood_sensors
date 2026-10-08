@@ -6,7 +6,7 @@ import { Layers, Sliders, ShieldAlert, Radio, MapPin, Eye, EyeOff } from "lucide
 
 export const Route = createFileRoute("/risk-map")({
   head: () => ({
-    meta: [{ title: "Risk Map — Quantum Flood Response Command Center" }]
+    meta: [{ title: "Risk Map — Quantum Flood Response Command Center" }],
   }),
   component: RiskMapScreen,
 });
@@ -100,7 +100,11 @@ export function RiskMapScreen() {
             <span className="flex items-center gap-2">
               <ShieldAlert className="w-4 h-4 text-amber-400" /> Risk Intensity Zones
             </span>
-            {showRiskZones ? <Eye className="w-4 h-4 text-cyan-400" /> : <EyeOff className="w-4 h-4 text-slate-600" />}
+            {showRiskZones ? (
+              <Eye className="w-4 h-4 text-cyan-400" />
+            ) : (
+              <EyeOff className="w-4 h-4 text-slate-600" />
+            )}
           </button>
 
           <button
@@ -110,7 +114,11 @@ export function RiskMapScreen() {
             <span className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-cyan-400" /> Candidate Sensors (C-KR-*)
             </span>
-            {showCandidates ? <Eye className="w-4 h-4 text-cyan-400" /> : <EyeOff className="w-4 h-4 text-slate-600" />}
+            {showCandidates ? (
+              <Eye className="w-4 h-4 text-cyan-400" />
+            ) : (
+              <EyeOff className="w-4 h-4 text-slate-600" />
+            )}
           </button>
 
           <button
@@ -120,7 +128,11 @@ export function RiskMapScreen() {
             <span className="flex items-center gap-2">
               <Radio className="w-4 h-4 text-purple-400" /> Comm Relays (RL-KR-*)
             </span>
-            {showRelays ? <Eye className="w-4 h-4 text-purple-400" /> : <EyeOff className="w-4 h-4 text-slate-600" />}
+            {showRelays ? (
+              <Eye className="w-4 h-4 text-purple-400" />
+            ) : (
+              <EyeOff className="w-4 h-4 text-slate-600" />
+            )}
           </button>
         </div>
 
@@ -129,22 +141,28 @@ export function RiskMapScreen() {
           <label className="text-slate-400 font-semibold block uppercase">MAP LEGEND</label>
           <div className="grid grid-cols-2 gap-1.5 text-[11px] text-slate-300">
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded bg-red-500/80 border border-red-400 inline-block" /> Critical Risk (≥80)
+              <span className="w-3 h-3 rounded bg-red-500/80 border border-red-400 inline-block" />{" "}
+              Critical Risk (≥80)
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded bg-orange-500/80 border border-orange-400 inline-block" /> High Risk (60-79)
+              <span className="w-3 h-3 rounded bg-orange-500/80 border border-orange-400 inline-block" />{" "}
+              High Risk (60-79)
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded bg-amber-500/80 border border-amber-400 inline-block" /> Watch (40-59)
+              <span className="w-3 h-3 rounded bg-amber-500/80 border border-amber-400 inline-block" />{" "}
+              Watch (40-59)
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded bg-sky-500/80 border border-sky-400 inline-block" /> Low Risk (&lt;40)
+              <span className="w-3 h-3 rounded bg-sky-500/80 border border-sky-400 inline-block" />{" "}
+              Low Risk (&lt;40)
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-cyan-400 border border-slate-100 inline-block" /> Deployed Sensor
+              <span className="w-3 h-3 rounded-full bg-cyan-400 border border-slate-100 inline-block" />{" "}
+              Deployed Sensor
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-purple-500 border border-slate-100 inline-block" /> Comm Relay
+              <span className="w-3 h-3 rounded-full bg-purple-500 border border-slate-100 inline-block" />{" "}
+              Comm Relay
             </div>
           </div>
         </div>
@@ -152,11 +170,7 @@ export function RiskMapScreen() {
 
       {/* Main Geospatial Intelligence Map */}
       <div className="flex-1 relative h-full">
-        <CommandMap
-          basinId={basinId}
-          showRiskZones={showRiskZones}
-          height="100%"
-        />
+        <CommandMap basinId={basinId} showRiskZones={showRiskZones} height="100%" />
       </div>
     </div>
   );

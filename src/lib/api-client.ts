@@ -1,6 +1,6 @@
-import { CandidateLocation } from "./geo-data";
-
-export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+export const API_BASE =
+  (import.meta.env as Record<string, string | undefined>)["VITE_API_URL"] ||
+  "http://localhost:8000/api";
 
 export interface RiskEvaluationData {
   basin_id: string;
@@ -136,9 +136,9 @@ export interface CoupledOptimizationResponse {
     active_relay_utilization: Record<string, number>;
     is_relay_count_consistent: boolean;
   };
-  candidates: any[];
-  comm_nodes: any[];
-  demand_points: any[];
+  candidates: unknown[];
+  comm_nodes: unknown[];
+  demand_points: unknown[];
   qubo_summary: {
     num_qubits: number;
     sensor_qubits: number;
@@ -163,7 +163,7 @@ export async function fetchBasinRisk(basinId: string): Promise<RiskEvaluationDat
   return {
     basin_id: basinId,
     risk_score: score,
-    risk_level: score >= 80 ? "CRITICAL" : score >= 60 ? "WARNING" : score >= 40 ? "WATCH" : "LOW",
+    risk_level: score >= 80 ? "CRITICAL" : score >= 60 ? "HIGH" : score >= 40 ? "MODERATE" : "LOW",
     rainfall_mm: rain,
     historical_avg_rainfall_mm: hist,
     population_exposure_count: isKrishna ? 1240000 : 1850000,
@@ -174,11 +174,11 @@ export async function fetchBasinRisk(basinId: string): Promise<RiskEvaluationDat
       rainfall_score: isKrishna ? 75.0 : 85.0,
       rainfall_anomaly_score: isKrishna ? 67.6 : 70.9,
       population_exposure_score: isKrishna ? 82.0 : 90.0,
-      rainfall_weight: 0.40,
-      anomaly_weight: 0.30,
-      exposure_weight: 0.30
+      rainfall_weight: 0.4,
+      anomaly_weight: 0.3,
+      exposure_weight: 0.3,
     },
-    explanation: `Heavy 3-day precipitation of ${rain}mm exceeding historical norm (${hist}mm) combined with high population exposure in downstream delta zones.`
+    explanation: `Heavy 3-day precipitation of ${rain}mm exceeding historical norm (${hist}mm) combined with high population exposure in downstream delta zones.`,
   };
 }
 
@@ -192,19 +192,36 @@ export async function fetchCandidates(basinId: string): Promise<CandidateRespons
   const isKrishna = basinId === "krishna";
   const coords: [number, number][] = isKrishna
     ? [
-        [16.506, 80.648], [16.220, 80.820], [16.780, 80.850], [16.450, 80.320],
-        [16.150, 80.450], [16.650, 80.120], [16.350, 81.050], [16.900, 80.500],
-        [16.050, 80.650], [16.700, 81.150]
+        [16.506, 80.648],
+        [16.22, 80.82],
+        [16.78, 80.85],
+        [16.45, 80.32],
+        [16.15, 80.45],
+        [16.65, 80.12],
+        [16.35, 81.05],
+        [16.9, 80.5],
+        [16.05, 80.65],
+        [16.7, 81.15],
       ]
     : [
-        [16.980, 81.780], [16.820, 81.860], [16.550, 81.950], [17.150, 81.520],
-        [16.400, 81.700], [17.300, 81.250], [16.650, 82.100], [17.050, 82.000],
-        [16.250, 81.550], [17.400, 81.850]
+        [16.98, 81.78],
+        [16.82, 81.86],
+        [16.55, 81.95],
+        [17.15, 81.52],
+        [16.4, 81.7],
+        [17.3, 81.25],
+        [16.65, 82.1],
+        [17.05, 82.0],
+        [16.25, 81.55],
+        [17.4, 81.85],
       ];
-  
+
   const cands = coords.map((c, i) => {
     const cid = `C-${isKrishna ? "KR" : "GD"}-00${i + 1}`;
     const risk = Math.round(92 - i * 5);
+    const priorityLevel: "LOW" | "MODERATE" | "HIGH" | "CRITICAL" =
+      risk >= 80 ? "CRITICAL" : risk >= 60 ? "HIGH" : risk >= 40 ? "MODERATE" : "LOW";
+
     return {
       id: cid,
       basin_id: basinId,
@@ -213,7 +230,7 @@ export async function fetchCandidates(basinId: string): Promise<CandidateRespons
       risk_score: risk,
       population_exposure: Number((0.95 - i * 0.07).toFixed(2)),
       population_count: Math.round(180000 - i * 14000),
-      priority: (risk >= 80 ? "CRITICAL" : risk >= 60 ? "WARNING" : risk >= 40 ? "WATCH" : "LOW") as any
+      priority: priorityLevel,
     };
   });
 
@@ -221,7 +238,7 @@ export async function fetchCandidates(basinId: string): Promise<CandidateRespons
     basin_id: basinId,
     total_candidates: cands.length,
     min_spacing_km: 12.0,
-    candidates: cands
+    candidates: cands,
   };
 }
 
@@ -248,27 +265,27 @@ export async function fetchForecast(basinId: string): Promise<ForecastResponseDa
         recall: 0.4194,
         f1_score: 0.2488,
         roc_auc: 0.7913,
-        pr_auc: 0.1486
+        pr_auc: 0.1486,
       },
       random_forest: {
         model_name: "Random Forest Classifier",
         accuracy: 0.9421,
-        precision: 0.3200,
+        precision: 0.32,
         recall: 0.2581,
         f1_score: 0.2857,
-        roc_auc: 0.7950,
-        pr_auc: 0.1720
+        roc_auc: 0.795,
+        pr_auc: 0.172,
       },
       qml_vqc: {
         model_name: "2-Qubit Variational Quantum Classifier (Qiskit 2.5)",
         num_qubits: 2,
         accuracy: 0.9282,
-        precision: 0.0400,
-        recall: 0.2500,
-        f1_score: 0.0690,
-        roc_auc: 0.6284
-      }
-    }
+        precision: 0.04,
+        recall: 0.25,
+        f1_score: 0.069,
+        roc_auc: 0.6284,
+      },
+    },
   };
 }
 
@@ -291,7 +308,7 @@ export async function fetchAlerts(basinId: string): Promise<AlertResponseData> {
         title: `${isKrishna ? "Krishna" : "Godavari"} Basin High Flood Warning`,
         reason: `3-day precipitation of ${isKrishna ? 142.5 : 188.0}mm exceeds critical anomaly threshold. High delta population exposure.`,
         source: "IMD Rainfall NetCDF Dataset",
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       },
       {
         id: `ALT-${isKrishna ? "KR" : "GD"}-002`,
@@ -301,14 +318,19 @@ export async function fetchAlerts(basinId: string): Promise<AlertResponseData> {
         title: "Downstream Delta Embankment Exposure",
         reason: "Surge accumulation risk in urban delta zones (Vijayawada / Rajahmundry).",
         source: "WorldPop India Constrained GeoTIFF",
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     ],
     channels: [
       { channel: "dashboard", label: "Command Center HUD", enabled: true, connected: true },
       { channel: "email", label: "SDMA Email Dispatch", enabled: false, connected: false },
-      { channel: "whatsapp", label: "WhatsApp Emergency Broadcast", enabled: false, connected: false }
-    ]
+      {
+        channel: "whatsapp",
+        label: "WhatsApp Emergency Broadcast",
+        enabled: false,
+        connected: false,
+      },
+    ],
   };
 }
 
@@ -321,6 +343,8 @@ export async function runCoupledOptimization(params: {
   qaoa_depth?: number;
 }): Promise<CoupledOptimizationResponse> {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 1200);
     const res = await fetch(`${API_BASE}/optimization/coupled`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -329,10 +353,12 @@ export async function runCoupledOptimization(params: {
         scenario: params.scenario || "MONSOON_SURGE",
         max_sensors: params.max_sensors ?? 3,
         max_relays: params.max_relays ?? 2,
-        surge_probability: params.surge_probability ?? 0.80,
-        qaoa_depth: params.qaoa_depth ?? 1
-      })
+        surge_probability: params.surge_probability ?? 0.8,
+        qaoa_depth: params.qaoa_depth ?? 1,
+      }),
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
     if (res.ok) return await res.json();
   } catch (e) {
     console.warn("Backend API unavailable, using optimization fallback", e);
@@ -343,18 +369,21 @@ export async function runCoupledOptimization(params: {
   const isRegionB = scenario === "EXTREME_CYCLONE";
 
   const sensors = isKrishna
-    ? (isRegionB ? ["C-KR-004", "C-KR-010"] : ["C-KR-001", "C-KR-002", "C-KR-003"])
+    ? isRegionB
+      ? ["C-KR-004"]
+      : ["C-KR-001", "C-KR-002", "C-KR-003"]
     : ["C-GD-001", "C-GD-002", "C-GD-003"];
 
   const relays = isKrishna ? ["RL-KR-P1", "RL-KR-P2"] : ["RL-GD-P1", "RL-GD-P2"];
-  const bitstr = isRegionB ? "000100000111" : "111000000011";
+
+  const bitstr = isRegionB ? "00010011" : scenario === "NORMAL" ? "10001001" : "11100011";
 
   return {
     metrics: {
       basin_id: params.basin_id,
       scenario_name: scenario,
       risk_score: isKrishna ? 78 : 88,
-      forecast_probability: params.surge_probability || 0.80,
+      forecast_probability: params.surge_probability || 0.8,
       selected_sensors: sensors,
       selected_relays: relays,
       sensor_count: sensors.length,
@@ -364,11 +393,11 @@ export async function runCoupledOptimization(params: {
       high_risk_coverage: 0.884,
       disconnected_sensors: [],
       uncovered_high_risk_demand: 18.5,
-      objective_score: 412.50,
-      qubo_energy: -412.50,
+      objective_score: 412.5,
+      qubo_energy: -412.5,
       qaoa_depth: params.qaoa_depth || 1,
       approximation_ratio: 0.9929,
-      optimality_gap_percent: 0.71
+      optimality_gap_percent: 0.71,
     },
     decoding: {
       bitstring: bitstr,
@@ -380,8 +409,11 @@ export async function runCoupledOptimization(params: {
       selected_relay_ids: relays,
       selected_sensors_count: sensors.length,
       selected_relays_count: relays.length,
-      active_relay_utilization: { [relays[0]]: 2, [relays[1]]: 1 },
-      is_relay_count_consistent: true
+      active_relay_utilization: {
+        [relays[0] ?? "RL-KR-P1"]: 2,
+        [relays[1] ?? "RL-KR-P2"]: 1,
+      },
+      is_relay_count_consistent: true,
     },
     candidates: [],
     comm_nodes: [],
@@ -391,7 +423,7 @@ export async function runCoupledOptimization(params: {
       sensor_qubits: 5,
       relay_qubits: 3,
       offset: 0.0,
-      matrix_size: "8x8"
-    }
+      matrix_size: "8x8",
+    },
   };
 }

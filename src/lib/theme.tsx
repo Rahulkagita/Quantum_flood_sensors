@@ -6,14 +6,22 @@ export type ResolvedTheme = "dark" | "light";
 const STORAGE_KEY = "fi-theme";
 
 /** Runs before paint (inlined in <head>) so the persisted theme never flashes. */
-export const themeBootScript = `(function(){try{var p=localStorage.getItem("${STORAGE_KEY}")||"system";var d=p==="dark"||(p==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light";}catch(e){}})();`;
+export const themeBootScript = `(function(){try{var p=localStorage.getItem("${STORAGE_KEY}")||"light";var d=p==="dark";var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light";}catch(e){}})();`;
 
-interface ThemeContextValue { preference: ThemePreference; resolved: ResolvedTheme; setPreference: (value: ThemePreference) => void; }
-const ThemeContext = createContext<ThemeContextValue>({ preference: "system", resolved: "dark", setPreference: () => undefined });
+interface ThemeContextValue {
+  preference: ThemePreference;
+  resolved: ResolvedTheme;
+  setPreference: (value: ThemePreference) => void;
+}
+const ThemeContext = createContext<ThemeContextValue>({
+  preference: "light",
+  resolved: "light",
+  setPreference: () => undefined,
+});
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [preference, setPref] = useState<ThemePreference>("system");
-  const [resolved, setResolved] = useState<ResolvedTheme>("dark");
+  const [preference, setPref] = useState<ThemePreference>("light");
+  const [resolved, setResolved] = useState<ResolvedTheme>("light");
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY) as ThemePreference | null;
@@ -23,7 +31,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const apply = () => {
-      const next: ResolvedTheme = preference === "system" ? (media.matches ? "dark" : "light") : preference;
+      const next: ResolvedTheme =
+        preference === "system" ? (media.matches ? "dark" : "light") : preference;
       const root = document.documentElement;
       root.classList.add("theme-transition");
       root.classList.toggle("dark", next === "dark");
@@ -41,7 +50,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setPref(value);
   }, []);
 
-  return <ThemeContext.Provider value={{ preference, resolved, setPreference }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ preference, resolved, setPreference }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export const useTheme = () => useContext(ThemeContext);

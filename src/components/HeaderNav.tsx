@@ -1,116 +1,188 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useBasin } from "../lib/basin-context";
-import {
-  LayoutDashboard,
-  Activity,
-  Map,
-  Cpu,
-  Network,
-  GitFork,
-  Bell,
-  ShieldAlert,
-  Radio,
-  Layers
-} from "lucide-react";
+import { useBasin, BasinId } from "../lib/basin-context";
+import { Droplets, Compass, CloudRain, Cpu, Network, Bell, ShieldAlert, Menu, X, ChevronDown } from "lucide-react";
 
 export const HeaderNav: React.FC = () => {
   const { basinId, setBasinId, riskData } = useBasin();
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Clean minimal navigation for PRAVAAH
   const navItems = [
-    { label: "OVERVIEW", path: "/", icon: LayoutDashboard },
-    { label: "FORECAST", path: "/forecast", icon: Activity },
-    { label: "RISK MAP", path: "/risk-map", icon: Map },
-    { label: "QUANTUM OPTIMIZER", path: "/quantum-optimizer", icon: Cpu, isQuantum: true },
-    { label: "RESPONSE NETWORK", path: "/response-network", icon: Network },
-    { label: "SCENARIOS", path: "/scenarios", icon: GitFork },
-    { label: "ALERTS", path: "/alerts", icon: Bell },
+    { label: "Overview", path: "/", icon: Compass },
+    { label: "Forecast", path: "/forecast", icon: CloudRain },
+    { label: "Quantum Optimize", path: "/quantum-optimizer", icon: Cpu, isQuantum: true },
+    { label: "Network", path: "/response-network", icon: Network },
+    { label: "Response", path: "/alerts", icon: Bell },
   ];
 
   return (
     <header className="app-header">
-      {/* Brand & Title */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-mono font-bold text-xs tracking-wider">
-            UC067
+      {/* Brand & Subtitle */}
+      <div className="flex items-center gap-3 md:gap-4">
+        <Link to="/" className="flex items-center gap-2.5 text-inherit no-underline">
+          <div className="w-8 h-8 rounded-lg bg-[#168A5B] flex items-center justify-center text-white shadow-xs shrink-0">
+            <Droplets className="w-4 h-4" />
           </div>
           <div>
-            <h1 className="text-xs font-mono font-bold tracking-wider text-slate-100 uppercase flex items-center gap-2">
-              QUANTUM FLOOD RESPONSE COMMAND CENTER
-            </h1>
-            <p className="text-[11px] text-slate-400 font-sans">
-              Krishna & Godavari Basins · Disaster-Response Optimization
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-bold tracking-tight text-[#1A2421]">
+                PRAVAAH
+              </span>
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-[#EEF7F1] text-[#126B48] border border-[#C4E2D3]">
+                UC-067
+              </span>
+            </div>
+            <p className="text-[11px] text-[#5C6E66] leading-none mt-0.5 hidden sm:block">
+              Flood Intelligence & Response Optimization
             </p>
           </div>
-        </div>
+        </Link>
 
         {/* Basin Selector Context */}
-        <div className="h-6 w-px bg-slate-800 hidden md:block" />
+        <div className="h-5 w-px bg-[#DFE5DF] hidden md:block" />
 
-        <div className="hidden md:flex items-center gap-3">
-          <div className="flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 rounded px-2.5 py-1 text-xs">
-            <span className="text-slate-400 font-mono">BASIN:</span>
-            <select
-              value={basinId}
-              onChange={(e) => setBasinId(e.target.value as any)}
-              className="bg-transparent font-mono font-semibold text-cyan-400 focus:outline-none cursor-pointer uppercase"
-            >
-              <option value="krishna" className="bg-slate-900 text-slate-100">
-                KRISHNA BASIN (80.65°E, 16.50°N)
-              </option>
-              <option value="godavari" className="bg-slate-900 text-slate-100">
-                GODAVARI BASIN (81.78°E, 16.98°N)
-              </option>
-            </select>
+        <div className="hidden md:flex items-center gap-2.5">
+          <div className="flex items-center gap-1.5 bg-[#F7F8F3] border border-[#DFE5DF] rounded-md px-2.5 py-1 text-xs">
+            <span className="text-[#5C6E66] text-[11px] font-medium">Basin:</span>
+            <div className="relative flex items-center">
+              <select
+                value={basinId}
+                onChange={(e) => setBasinId(e.target.value as BasinId)}
+                className="bg-transparent font-semibold text-[#126B48] focus:outline-none cursor-pointer text-xs pr-4 appearance-none"
+              >
+                <option value="krishna" className="bg-white text-[#1A2421]">
+                  Krishna Basin (80.65°E, 16.50°N)
+                </option>
+                <option value="godavari" className="bg-white text-[#1A2421]">
+                  Godavari Basin (81.78°E, 16.98°N)
+                </option>
+              </select>
+              <ChevronDown className="w-3 h-3 text-[#126B48] absolute right-0 pointer-events-none" />
+            </div>
           </div>
 
           {/* Risk Level Badge */}
           {riskData && (
-            <div
-              className="badge-risk"
-              data-risk={riskData.risk_level}
-            >
+            <div className="badge-risk" data-risk={riskData.risk_level}>
               <ShieldAlert className="w-3.5 h-3.5" />
               {riskData.risk_level} ({riskData.risk_score}/100)
             </div>
           )}
 
           {/* Data State Indicators */}
-          <div className="hidden lg:flex items-center gap-1.5">
-            <span className="badge-state" data-state="DATASET" title="IMD Rainfall & WorldPop GeoTIFF">
-              RAINFALL: DATASET
+          <div className="hidden xl:flex items-center gap-1.5">
+            <span
+              className="badge-state"
+              data-state="DATASET"
+              title="IMD Rainfall NetCDF & WorldPop 2020 GeoTIFF"
+            >
+              IMD NetCDF + WorldPop
             </span>
-            <span className="badge-state" data-state="SIMULATED" title="Qiskit 2.5 Statevector Simulation">
-              QAOA: SIMULATED
-            </span>
-            <span className="badge-state" data-state="UNAVAILABLE" title="River discharge gauge telemetry unavailable">
-              RIVER TELEMETRY: UNAVAILABLE
+            <span className="badge-quantum" title="Qiskit 2.5 Statevector Simulator">
+              Qiskit 2.5 Simulation
             </span>
           </div>
         </div>
       </div>
 
-      {/* Primary Navigation Bar */}
-      <nav className="nav-rail">
+      {/* Desktop 5-Stage Navigation */}
+      <nav className="nav-rail hidden lg:flex">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = currentPath === item.path || (item.path === "/" && (currentPath === "" || currentPath === "/overview"));
+          const isActive =
+            currentPath === item.path ||
+            (item.path === "/" && (currentPath === "" || currentPath === "/overview"));
           return (
             <Link
               key={item.path}
-              to={item.path as any}
-              className={`nav-item ${item.isQuantum ? "hover:border-purple-500/50" : ""}`}
+              to={item.path}
+              className="nav-item"
               data-active={isActive}
+              data-quantum={item.isQuantum ? "true" : "false"}
             >
-              <Icon className={`w-4 h-4 ${isActive ? (item.isQuantum ? "text-purple-400" : "text-cyan-400") : "text-slate-400"}`} />
-              <span className={item.isQuantum ? "text-purple-300 font-semibold" : ""}>{item.label}</span>
+              <Icon
+                className={`w-3.5 h-3.5 ${
+                  isActive
+                    ? item.isQuantum
+                      ? "text-[#7657B8]"
+                      : "text-[#168A5B]"
+                    : "text-[#5C6E66]"
+                }`}
+              />
+              <span>{item.label}</span>
             </Link>
           );
         })}
       </nav>
+
+      {/* Mobile Hamburger Toggle Button */}
+      <div className="flex items-center gap-2 lg:hidden">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle mobile menu"
+          className="p-2 rounded-md bg-[#F7F8F3] border border-[#DFE5DF] text-[#1A2421] hover:bg-[#EEF2EE] transition-colors"
+        >
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Drawer */}
+      {mobileMenuOpen && (
+        <div className="absolute top-full left-0 right-0 z-50 bg-white border-b border-[#DFE5DF] shadow-lg p-4 space-y-4 lg:hidden animate-in slide-in-from-top-2">
+          {/* Mobile Basin Selector */}
+          <div className="flex items-center justify-between p-2.5 bg-[#F7F8F3] rounded-md border border-[#DFE5DF]">
+            <span className="text-xs font-medium text-[#5C6E66]">Basin Selection:</span>
+            <select
+              value={basinId}
+              onChange={(e) => setBasinId(e.target.value as BasinId)}
+              className="bg-white border border-[#DFE5DF] px-2 py-1 rounded font-semibold text-[#126B48] text-xs outline-none"
+            >
+              <option value="krishna">Krishna Basin</option>
+              <option value="godavari">Godavari Basin</option>
+            </select>
+          </div>
+
+          {/* Mobile Nav Links */}
+          <nav className="flex flex-col gap-1.5">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                currentPath === item.path ||
+                (item.path === "/" && (currentPath === "" || currentPath === "/overview"));
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 p-2.5 rounded-md text-xs font-semibold transition-colors ${
+                    isActive
+                      ? item.isQuantum
+                        ? "bg-[#EEE9F8] text-[#6343A1] border border-[#D8CCE8]"
+                        : "bg-[#EEF7F1] text-[#126B48] border border-[#C4E2D3]"
+                      : "text-[#5C6E66] hover:bg-[#F7F8F3]"
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Mobile Data Badges */}
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-[#DFE5DF]">
+            <span className="badge-state" data-state="DATASET">
+              IMD NetCDF + WorldPop
+            </span>
+            <span className="badge-quantum">
+              Qiskit 2.5 Simulation
+            </span>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

@@ -49,7 +49,12 @@ export interface FloodScenarioService {
   simulate(input: FloodScenarioRequest): Promise<FloodScenarioResult>;
 }
 
-const rainfallWeight: Record<RainfallIntensity, number> = { normal: 0, heavy: 5, severe: 10, extreme: 15 };
+const rainfallWeight: Record<RainfallIntensity, number> = {
+  normal: 0,
+  heavy: 5,
+  severe: 10,
+  extreme: 15,
+};
 const durationWeight: Record<ScenarioDuration, number> = { 1: 0, 6: 3, 12: 6, 24: 10 };
 
 const zonesByBasin: Record<Basin["id"], ScenarioCriticalZone[]> = {
@@ -68,15 +73,30 @@ const zonesByBasin: Record<Basin["id"], ScenarioCriticalZone[]> = {
 export const mockFloodScenarioService: FloodScenarioService = {
   async simulate(input) {
     await new Promise((resolve) => window.setTimeout(resolve, 850));
-    const stress = rainfallWeight[input.rainfallIntensity]
-      + input.riverRiseMeters * 8
-      + durationWeight[input.durationHours]
-      + input.sensorFailurePercent * 0.16
-      + input.communicationFailurePercent * 0.12;
+    const stress =
+      rainfallWeight[input.rainfallIntensity] +
+      input.riverRiseMeters * 8 +
+      durationWeight[input.durationHours] +
+      input.sensorFailurePercent * 0.16 +
+      input.communicationFailurePercent * 0.12;
     const predictedRisk = Math.min(99, Math.round(input.currentRisk + stress * 0.68));
     const additionalSensors = Math.max(1, Math.min(6, Math.ceil(stress / 11)));
-    const additionalCommunicationNodes = Math.max(0, Math.min(3, Math.ceil((input.communicationFailurePercent + input.sensorFailurePercent * 0.3 + input.riverRiseMeters * 5) / 18)));
-    const requiredCoverage = Math.min(98, Math.round(input.currentCoverage + Math.max(6, stress * 0.36)));
+    const additionalCommunicationNodes = Math.max(
+      0,
+      Math.min(
+        3,
+        Math.ceil(
+          (input.communicationFailurePercent +
+            input.sensorFailurePercent * 0.3 +
+            input.riverRiseMeters * 5) /
+            18,
+        ),
+      ),
+    );
+    const requiredCoverage = Math.min(
+      98,
+      Math.round(input.currentCoverage + Math.max(6, stress * 0.36)),
+    );
     const criticalZoneCount = Math.max(1, Math.min(3, Math.ceil(stress / 12)));
 
     return {
@@ -95,8 +115,12 @@ export const mockFloodScenarioService: FloodScenarioService = {
       additionalCommunicationNodes,
       criticalZones: zonesByBasin[input.basinId].slice(0, criticalZoneCount),
       recommendations: [
-        ...["S07", "S11", "S14", "S18", "S22", "S26"].slice(0, additionalSensors).map((id) => `Deploy Sensor ${id}`),
-        ...["C03", "C05", "C08"].slice(0, additionalCommunicationNodes).map((id) => `Activate Communication Node ${id}`),
+        ...["S07", "S11", "S14", "S18", "S22", "S26"]
+          .slice(0, additionalSensors)
+          .map((id) => `Deploy Sensor ${id}`),
+        ...["C03", "C05", "C08"]
+          .slice(0, additionalCommunicationNodes)
+          .map((id) => `Activate Communication Node ${id}`),
       ],
     };
   },

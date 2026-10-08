@@ -1,9 +1,20 @@
 """
 Coupled Sensor + Communication QUBO Generator (Phase 4I).
 
-Formulates joint decision variables:
-q_0 .. q_{N-1} : Sensor selections x_i in {0,1}
-q_N .. q_{N+M-1}: Communication node selections y_j in {0,1}
+CANONICAL QUBIT MAPPING:
+q_0 .. q_{N-1}   : Candidate Sensors x_1 .. x_N in {0,1}
+q_N .. q_{N+M-1} : Communication Relays y_1 .. y_M in {0,1}
+Total Qubits: N + M
+
+For N=5 sensors, M=3 relays (Total = 8 qubits):
+q_0 -> x_1 (Candidate Sensor 1)
+q_1 -> x_2 (Candidate Sensor 2)
+q_2 -> x_3 (Candidate Sensor 3)
+q_3 -> x_4 (Candidate Sensor 4)
+q_4 -> x_5 (Candidate Sensor 5)
+q_5 -> y_1 (Communication Relay 1)
+q_6 -> y_2 (Communication Relay 2)
+q_7 -> y_3 (Communication Relay 3)
 
 Objective:
 MAXIMIZE: Sensor Forecast Risk Coverage + Population Exposure + Early Warning Value

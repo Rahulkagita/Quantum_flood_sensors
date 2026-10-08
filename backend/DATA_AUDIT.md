@@ -1,11 +1,13 @@
 # DATA AUDIT REPORT — UC-067 BACKEND DATASETS
 
 ## 1. Executive Summary
+
 This audit documents the authoritative physical and geospatial datasets present under `backend/data/raw/`. No external or synthetic datasets have been added.
 
 ## 2. Dataset Inventory
 
 ### Dataset A: IMD High-Resolution Gridded Daily Rainfall NetCDF Series
+
 - **Filenames:**
   - `backend/data/raw/rainfall/RF25_ind1981_rfp25.nc` (365 daily timesteps)
   - `backend/data/raw/rainfall/RF25_ind1986_rfp25.nc` (365 daily timesteps)
@@ -23,6 +25,7 @@ This audit documents the authoritative physical and geospatial datasets present 
 - **Forecasting Suitability:** **HIGH**. Provides continuous multi-day temporal sequences of precipitation ($R_{t-3}, R_{t-2}, R_{t-1}$) to predict future heavy rainfall probability $P(R_{t+1} \ge 35\text{ mm})$ or 3-day accumulated surge risk.
 
 ### Dataset B: WorldPop 2020 High-Resolution Population GeoTIFF
+
 - **Filename:** `backend/data/raw/geospatial/ind_ppp_2020_UNadj_constrained.tif` (488 MB)
 - **Spatial Resolution:** $0.00083333^\circ \approx 100\text{ meters}$ per pixel ($35,075 \times 34,497$ grid).
 - **Coordinate System:** WGS84 (`EPSG:4326`).
@@ -33,6 +36,7 @@ This audit documents the authoritative physical and geospatial datasets present 
 ---
 
 ## 3. Data Capabilities & Limitations
+
 1. **Supported:**
    - Extreme precipitation forecasting (3-day surge prediction).
    - Historical anomaly tracking vs baselines (1981, 1986 vs 2022-2025).

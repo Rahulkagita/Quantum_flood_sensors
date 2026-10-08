@@ -20,8 +20,8 @@ class IsingHamiltonian(BaseModel):
 
 class IsingMapper:
     @staticmethod
-    def map_qubo_to_ising(qubo: QuboFormulation) -> IsingHamiltonian:
-        N = qubo.num_candidates
+    def map_qubo_to_ising(qubo) -> IsingHamiltonian:
+        N = getattr(qubo, "num_candidates", getattr(qubo, "total_qubits", len(qubo.qubo_matrix)))
         Q = np.array(qubo.qubo_matrix, dtype=float)
         
         # Mathematical mapping derivations:
@@ -66,3 +66,13 @@ class IsingMapper:
             offset=round(const_offset, 4),
             pauli_string_representation=pauli_strings
         )
+
+    @staticmethod
+    def evaluate_ising_energy(z_vec: np.ndarray, h_dict: Dict[int, float], J_dict: Dict[str, float], offset: float) -> float:
+        energy = offset
+        for i, val in h_dict.items():
+            energy += val * z_vec[i]
+        for pair, val in J_dict.items():
+            i, j = map(int, pair.split(","))
+            energy += val * z_vec[i] * z_vec[j]
+        return energy

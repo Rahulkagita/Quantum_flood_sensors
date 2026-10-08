@@ -1,15 +1,16 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
+
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -29,103 +30,240 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-cyan-accent: #06B6D4;
-  --color-blue-accent: #0284C7;
-  --color-amber-warning: #F59E0B;
-  --color-red-critical: #EF4444;
-  --color-violet-quantum: #8B5CF6;
+
+  /* PRAVAAH Brand Tokens */
+  --color-pravaah-green: #168A5B;
+  --color-deep-green: #126B48;
+  --color-soft-green: #EEF7F1;
+  --color-river-blue: #3E8ED0;
+  --color-water-light: #DCEEF7;
+  --color-warm-white: #F7F8F3;
+
+  /* Risk Tokens */
+  --color-risk-low: #55B878;
+  --color-risk-watch: #F2C14E;
+  --color-risk-high: #F28C45;
+  --color-risk-critical: #E85D5A;
+
+  /* Restrained Quantum Tokens */
+  --color-quantum-violet: #7657B8;
+  --color-quantum-light: #EEE9F8;
 }
 
-/* ===== Command Center Theme Tokens ===== */
-:root, .dark {
-  --radius: 0.375rem;
-  --background: #050B14;
-  --surface: #0B132B;
-  --elevated: #111C38;
-  --foreground: #F8FAFC;
-  --muted-foreground: #94A3B8;
-  --card: #0B132B;
-  --card-foreground: #F8FAFC;
-  --popover: #111C38;
-  --popover-foreground: #F8FAFC;
-  --primary: #06B6D4;
-  --primary-foreground: #050B14;
-  --secondary: #1C294D;
-  --secondary-foreground: #F8FAFC;
-  --muted: #111C38;
-  --accent: #162345;
-  --accent-foreground: #F8FAFC;
-  --destructive: #EF4444;
+/* ===== PRAVAAH Light GIS Palette (Primary Default) ===== */
+:root {
+  --radius: 0.5rem;
+  --background: #F7F8F3;
+  --surface: #FFFFFF;
+  --elevated: #FFFFFF;
+  --foreground: #1A2421;
+  --muted-foreground: #5C6E66;
+  --card: #FFFFFF;
+  --card-foreground: #1A2421;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A2421;
+  --primary: #168A5B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEF7F1;
+  --secondary-foreground: #126B48;
+  --muted: #EEF2EE;
+  --accent: #E3EFE7;
+  --accent-foreground: #126B48;
+  --destructive: #E85D5A;
   --destructive-foreground: #FFFFFF;
-  --border: #1E2B4D;
-  --input: #1E2B4D;
-  --ring: #06B6D4;
-  --risk-low: #38BDF8;
-  --risk-medium: #F59E0B;
-  --risk-high: #F97316;
-  --risk-critical: #EF4444;
-  --quantum-accent: #8B5CF6;
-  --overlay: rgba(11, 19, 43, 0.92);
+  --border: #DFE5DF;
+  --input: #DFE5DF;
+  --ring: #168A5B;
+
+  /* River & GIS */
+  --river-blue: #3E8ED0;
+  --water-light: #DCEEF7;
+
+  /* Semantic Flood Risk */
+  --risk-low: #55B878;
+  --risk-watch: #F2C14E;
+  --risk-high: #F28C45;
+  --risk-critical: #E85D5A;
+
+  /* Quantum Computing Isolated Tokens */
+  --quantum-accent: #7657B8;
+  --quantum-surface: #EEE9F8;
+  --quantum-border: #D8CCE8;
+
+  --overlay: rgba(255, 255, 255, 0.96);
+}
+
+/* In dark class, maintain an elegant deep slate-green scientific tone if needed */
+.dark {
+  --background: #0E1714;
+  --surface: #14221D;
+  --elevated: #1B2C26;
+  --foreground: #F2F7F4;
+  --muted-foreground: #8FA69B;
+  --card: #14221D;
+  --card-foreground: #F2F7F4;
+  --popover: #1B2C26;
+  --popover-foreground: #F2F7F4;
+  --primary: #1EAA71;
+  --primary-foreground: #0E1714;
+  --secondary: #1F332B;
+  --secondary-foreground: #B5E8D2;
+  --muted: #1A2923;
+  --accent: #233B32;
+  --accent-foreground: #B5E8D2;
+  --destructive: #E85D5A;
+  --destructive-foreground: #FFFFFF;
+  --border: #273D34;
+  --input: #273D34;
+  --ring: #1EAA71;
+
+  --river-blue: #4FA2E6;
+  --water-light: #162E3D;
+
+  --risk-low: #55B878;
+  --risk-watch: #F2C14E;
+  --risk-high: #F28C45;
+  --risk-critical: #E85D5A;
+
+  --quantum-accent: #9A7FD1;
+  --quantum-surface: rgba(118, 87, 184, 0.16);
+  --quantum-border: rgba(154, 127, 209, 0.35);
+
+  --overlay: rgba(20, 34, 29, 0.95);
 }
 
 @layer base {
-  * { border-color: var(--border); }
-  html { background: var(--background); color-scheme: dark; }
-  body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); font-size: 14px; -webkit-font-smoothing: antialiased; }
-  button, [role="button"] { cursor: pointer; }
+  * {
+    border-color: var(--border);
+  }
+  html {
+    background: var(--background);
+  }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
 }
 
-.font-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
 
-/* Data State Badges */
+/* System State Badges */
 .badge-state {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.25rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.badge-state[data-state="LIVE"] { color: #10B981; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
-.badge-state[data-state="DATASET"] { color: #06B6D4; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
-.badge-state[data-state="SIMULATED"] { color: #F59E0B; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
-.badge-state[data-state="OPTIMIZED"] { color: #8B5CF6; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
-.badge-state[data-state="UNAVAILABLE"] { color: #64748B; background: rgba(100, 116, 139, 0.15); border: 1px solid rgba(100, 116, 139, 0.3); }
+.badge-state[data-state="LIVE"] {
+  color: #126B48;
+  background: #EEF7F1;
+  border: 1px solid #C4E2D3;
+}
+.badge-state[data-state="DATASET"] {
+  color: #168A5B;
+  background: #EEF7F1;
+  border: 1px solid #C4E2D3;
+}
+.badge-state[data-state="SIMULATED"] {
+  color: #9C6615;
+  background: #FEF7E6;
+  border: 1px solid #F6DDA8;
+}
+.badge-state[data-state="UNAVAILABLE"] {
+  color: #5C6E66;
+  background: #EEF2EE;
+  border: 1px solid #DFE5DF;
+}
+.badge-state[data-state="OPTIMIZED"] {
+  color: #126B48;
+  background: #EEF7F1;
+  border: 1px solid #A8D9C0;
+}
 
-/* Risk Level Badges */
+/* Genuine Quantum Badge */
+.badge-quantum {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #6343A1;
+  background: #EEE9F8;
+  border: 1px solid #D8CCE8;
+}
+
+/* Flood Risk Level Badges */
 .badge-risk {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0.2rem 0.6rem;
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
+  border-radius: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.badge-risk[data-risk="LOW"] { color: #38BDF8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); }
-.badge-risk[data-risk="WATCH"] { color: #F59E0B; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
-.badge-risk[data-risk="WARNING"] { color: #F97316; background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); }
-.badge-risk[data-risk="CRITICAL"] { color: #EF4444; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-risk[data-risk="LOW"] {
+  color: #267A45;
+  background: #EAF7EE;
+  border: 1px solid #B8E4C6;
+}
+.badge-risk[data-risk="WATCH"] {
+  color: #946808;
+  background: #FEF9EB;
+  border: 1px solid #FBE4A8;
+}
+.badge-risk[data-risk="WARNING"],
+.badge-risk[data-risk="HIGH"] {
+  color: #B55014;
+  background: #FDF0E6;
+  border: 1px solid #F8CBB1;
+}
+.badge-risk[data-risk="CRITICAL"] {
+  color: #B02A27;
+  background: #FDEDEC;
+  border: 1px solid #F6B8B6;
+}
 
-/* Navigation Rail & Header */
+/* Modern GIS Navigation Header */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  height: 3.5rem;
+  height: 3.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.25rem;
-  background: rgba(11, 19, 43, 0.95);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
+  padding: 0 1.5rem;
+  background: #FFFFFF;
+  border-bottom: 1px solid #DFE5DF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .nav-rail {
@@ -138,35 +276,49 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.45rem 0.75rem;
+  padding: 0.45rem 0.85rem;
   border-radius: 0.375rem;
-  color: #94A3B8;
-  font-size: 0.82rem;
+  color: #5C6E66;
+  font-size: 0.825rem;
+  font-family: var(--font-sans);
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
 }
-.nav-item:hover { color: #F8FAFC; background: rgba(30, 43, 77, 0.5); }
+.nav-item:hover {
+  color: #126B48;
+  background: #EEF7F1;
+}
 .nav-item[data-active="true"] {
-  color: #06B6D4;
-  background: rgba(6, 182, 212, 0.12);
-  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: #126B48;
+  background: #EEF7F1;
+  border: 1px solid #C4E2D3;
   font-weight: 600;
+}
+.nav-item[data-quantum="true"][data-active="true"] {
+  color: #6343A1;
+  background: #EEE9F8;
+  border: 1px solid #D8CCE8;
 }
 
 /* Map Containers */
 .command-map-container {
   position: relative;
   width: 100%;
-  height: calc(100vh - 3.5rem);
-  background: #050B14;
+  height: calc(100vh - 3.75rem);
+  background: #E8ECE8;
 }
 
-/* HUD Overlay Panels */
+/* Elegant Scientific Card Overlay */
 .hud-card {
-  background: rgba(11, 19, 43, 0.92);
-  border: 1px solid #1E2B4D;
+  background: #FFFFFF;
+  border: 1px solid #DFE5DF;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(18, 107, 72, 0.06);
+}
+
+/* Table Utilities */
+table {
+  font-variant-numeric: tabular-nums;
 }

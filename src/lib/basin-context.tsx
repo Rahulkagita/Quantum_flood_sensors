@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { fetchBasinRisk, RiskEvaluationData, fetchCandidates, CandidateResponseData } from "./api-client";
+import {
+  fetchBasinRisk,
+  RiskEvaluationData,
+  fetchCandidates,
+  CandidateResponseData,
+} from "./api-client";
 
 export type BasinId = "krishna" | "godavari";
 
@@ -26,10 +31,7 @@ export const BasinProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const refreshData = async () => {
     setLoading(true);
     try {
-      const [rData, cData] = await Promise.all([
-        fetchBasinRisk(basinId),
-        fetchCandidates(basinId)
-      ]);
+      const [rData, cData] = await Promise.all([fetchBasinRisk(basinId), fetchCandidates(basinId)]);
       setRiskData(rData);
       setCandidateData(cData);
     } catch (e) {
@@ -53,7 +55,7 @@ export const BasinProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         riskData,
         candidateData,
         loading,
-        refresh: refreshData
+        refresh: refreshData,
       }}
     >
       {children}

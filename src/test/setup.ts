@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/vitest";
-
 Object.defineProperty(window, "scrollTo", {
   writable: true,
   value: () => {},
@@ -18,3 +16,7 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => {},
   }),
 });
+
+if (typeof window !== "undefined" && window.URL && !window.URL.createObjectURL) {
+  window.URL.createObjectURL = () => "blob:mock-url";
+}

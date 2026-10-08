@@ -81,16 +81,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Quantum Flood Response Command Center (UC-067)" },
-      { name: "description", content: "Quantum Flood Response Command Center — UC-067 Flood Forecasting & Sensor Placement." },
-      { name: "author", content: "UC-067 Quantum Team" }
+      { title: "PRAVAAH — Flood Intelligence & Response Optimization (UC-067)" },
+      {
+        name: "description",
+        content:
+          "PRAVAAH: Flood Intelligence & Response Optimization for Krishna–Godavari Basin (UC-067).",
+      },
+      { name: "author", content: "PRAVAAH Intelligence Team" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -101,12 +108,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <HeadContent />
       </head>
-      <body className="bg-slate-950 text-slate-100 min-h-screen antialiased">
+      <body className="bg-[var(--background)] text-[var(--foreground)] min-h-screen antialiased">
         {children}
         <Scripts />
       </body>
@@ -121,9 +128,9 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <BasinProvider>
-          <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans">
+          <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] font-sans">
             <HeaderNav />
-            <main className="flex-1 w-full bg-slate-950">
+            <main className="flex-1 w-full bg-[var(--background)]">
               <Outlet />
             </main>
           </div>
